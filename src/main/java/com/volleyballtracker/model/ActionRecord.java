@@ -1,6 +1,7 @@
 package com.volleyballtracker.model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Model class for one recorded action.
@@ -26,6 +27,22 @@ public class ActionRecord {
 
     private LocalDateTime time;
 
+    public ActionRecord(int actionId, int setNumber, String playerName,
+                        String teamName, ActionType actionType,
+                        ActionResult actionResult, boolean pointsChanged,
+                        int pointAddedToTeam, LocalDateTime time) {
+
+        this.actionId = actionId;
+        this.setNumber = setNumber;
+        this.playerName = playerName;
+        this.teamName = teamName;
+        this.actionType = actionType;
+        this.actionResult = actionResult;
+        this.pointsChanged = pointsChanged;
+        this.pointAddedToTeam = pointAddedToTeam;
+        this.time = time;
+    }
+
     /** Changes this recorded action. */
     public void editAction() {
         // TODO: Change player/action/result and recalculate match if needed.
@@ -34,5 +51,27 @@ public class ActionRecord {
     /** Marks or removes this action from history. */
     public void deleteAction() {
         // TODO: Delete action from match history.
+    }
+
+    @Override
+    public String toString() {
+        String pointText;
+
+        if (pointsChanged) {
+            pointText = " | point to Team " + pointAddedToTeam;
+        } else {
+            pointText = " | no point";
+        }
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
+        String timeText = time.format(formatter);
+
+        return "Set " + setNumber +
+                " | " + playerName +
+                " (" + teamName + ")" +
+                " | " + actionType +
+                " --> " + actionResult +
+                pointText +
+                " | " + timeText;
     }
 }

@@ -1,5 +1,8 @@
 package com.volleyballtracker.controller;
 
+import com.volleyballtracker.view.EditStatsView;
+import javafx.stage.Stage;
+
 /**
  * Controller for Edit Stats screen.
  *
@@ -8,6 +11,34 @@ package com.volleyballtracker.controller;
  * - Allow user to edit or delete wrong action records.
  */
 public class EditStatsController {
+
+    private EditStatsView view;
+    private Stage stage;
+
+    public EditStatsController(EditStatsView view, Stage stage) {
+        this.view = view;
+        this.stage = stage;
+        connectActions();
+    }
+
+    private void connectActions() {
+        view.getEditButton().setOnAction(actionEvent -> {
+            System.out.println("Edit clicked");
+        });
+
+        view.getDeleteButton().setOnAction(actionEvent -> {
+            System.out.println("Delete clicked");
+        });
+
+        view.getSaveButton().setOnAction(actionEvent -> {
+            System.out.println("Save clicked");
+        });
+
+        view.getBackButton().setOnAction(actionEvent -> {
+            System.out.println("Back clicked");
+        });
+
+    }
 
     /** Loads all recorded actions of the current match. */
     public void loadActionHistory() {
