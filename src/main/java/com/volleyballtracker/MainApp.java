@@ -28,6 +28,8 @@ package com.volleyballtracker;
 
 
 
+import com.volleyballtracker.controller.MainMenuController;
+import com.volleyballtracker.view.MainMenuView;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -38,19 +40,12 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) {
-        Button newGameButton = new Button("New Game");
-        Button openGameButton = new Button("Open Game");
-        Button exitButton = new Button("Exit");
-
-        exitButton.setOnAction(event -> stage.close());
-
-        VBox root = new VBox(15);
-        root.getChildren().addAll(newGameButton, openGameButton, exitButton);
-
-        Scene scene = new Scene(root, 800, 600);
-
+        MainMenuView mainMenuView = new MainMenuView();
+        new MainMenuController(mainMenuView, stage);
+        Scene scene = new Scene(mainMenuView.getRoot(), 800, 600);
         stage.setTitle("Volleyball Stats Tracker");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 

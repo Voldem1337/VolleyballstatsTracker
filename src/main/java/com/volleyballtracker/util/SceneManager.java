@@ -1,12 +1,29 @@
 package com.volleyballtracker.util;
 
+import com.volleyballtracker.controller.MainMenuController;
+import com.volleyballtracker.view.MainMenuView;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
 /**
  * Utility class for switching JavaFX scenes.
  */
 public class SceneManager {
+    private final Stage stage;
 
-    /** Opens Main Menu screen. */
+    public SceneManager(Stage stage) {
+        this.stage = stage;
+    }
+
     public void switchToMainMenu() {
+        MainMenuView view = new MainMenuView();
+        new MainMenuController(view,stage);
+
+        Scene scene = new Scene(view.getRoot(),900,600);
+        stage.setScene(scene);
+
+
+
         // TODO: Load Main Menu screen.
     }
 
