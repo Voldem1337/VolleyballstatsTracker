@@ -1,15 +1,9 @@
 package com.volleyballtracker.model;
 
-/**
- * Model class for one player.
- *
- * Stores player name, team, position, overall stats,
- * total points and total errors.
- */
 public class Player {
 
     private String name;
-    private PlayerPosition position;
+    private String position;
     private String teamName;
 
     private int overallAttack;
@@ -43,13 +37,201 @@ public class Player {
 
     // Block
     private int monsterBlock;
-    private int veryGoodBlockTouch;
     private int blockTouch;
-    private int blockOut;
+    private int blockError;
 
     // Dig
     private int dig;
     private int digError;
+
+    public Player(String name, String position, String teamName) {
+        this.name = name;
+        this.position = position;
+        this.teamName = teamName;
+
+        this.overallAttack = 0;
+        this.overallReceive = 0;
+        this.overallDig = 0;
+        this.overallBlock = 0;
+
+        this.totalPoints = 0;
+        this.totalErrors = 0;
+
+        this.floatServe = 0;
+        this.jumpServe = 0;
+        this.ace = 0;
+        this.serveAttempt = 0;
+        this.serveError = 0;
+
+        this.receiveForTheOption = 0;
+        this.goodReceive = 0;
+        this.hardToSet = 0;
+        this.receiveError = 0;
+
+        this.spikeKill = 0;
+        this.spikeError = 0;
+        this.cutShotKill = 0;
+        this.cutShotError = 0;
+        this.spikeAttempt = 0;
+        this.cutShotAttempt = 0;
+
+        this.monsterBlock = 0;
+        this.blockTouch = 0;
+        this.blockError = 0;
+
+        this.dig = 0;
+        this.digError = 0;
+
+    }
+
+    public Player(String name, String position, String teamName, int overallAttack, int overallReceive, int overallDig, int overallBlock, int totalPoints, int totalErrors, int floatServe, int jumpServe, int ace, int serveAttempt, int serveError, int receiveForTheOption, int goodReceive, int hardToSet, int receiveError, int spikeKill, int spikeError, int cutShotKill, int cutShotError, int spikeAttempt, int cutShotAttempt, int monsterBlock, int blockTouch, int blockError, int dig, int digError) {
+        this.name = name;
+        this.position = position;
+        this.teamName = teamName;
+        this.overallAttack = overallAttack;
+        this.overallReceive = overallReceive;
+        this.overallDig = overallDig;
+        this.overallBlock = overallBlock;
+        this.totalPoints = totalPoints;
+        this.totalErrors = totalErrors;
+        this.floatServe = floatServe;
+        this.jumpServe = jumpServe;
+        this.ace = ace;
+        this.serveAttempt = serveAttempt;
+        this.serveError = serveError;
+        this.receiveForTheOption = receiveForTheOption;
+        this.goodReceive = goodReceive;
+        this.hardToSet = hardToSet;
+        this.receiveError = receiveError;
+        this.spikeKill = spikeKill;
+        this.spikeError = spikeError;
+        this.cutShotKill = cutShotKill;
+        this.cutShotError = cutShotError;
+        this.spikeAttempt = spikeAttempt;
+        this.cutShotAttempt = cutShotAttempt;
+        this.monsterBlock = monsterBlock;
+        this.blockTouch = blockTouch;
+        this.blockError = blockError;
+        this.dig = dig;
+        this.digError = digError;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+
+    public void setOverallAttack(int overallAttack) {
+        this.overallAttack = overallAttack;
+    }
+
+    public void setOverallReceive(int overallReceive) {
+        this.overallReceive = overallReceive;
+    }
+
+    public void setOverallDig(int overallDig) {
+        this.overallDig = overallDig;
+    }
+
+    public void setOverallBlock(int overallBlock) {
+        this.overallBlock = overallBlock;
+    }
+
+    public void setTotalPoints(int totalPoints) {
+        this.totalPoints = totalPoints;
+    }
+
+    public void setTotalErrors(int totalErrors) {
+        this.totalErrors = totalErrors;
+    }
+
+    public void setFloatServe(int floatServe) {
+        this.floatServe = floatServe;
+    }
+
+    public void setJumpServe(int jumpServe) {
+        this.jumpServe = jumpServe;
+    }
+
+    public void setAce(int ace) {
+        this.ace = ace;
+    }
+
+    public void setServeAttempt(int serveAttempt) {
+        this.serveAttempt = serveAttempt;
+    }
+
+    public void setServeError(int serveError) {
+        this.serveError = serveError;
+    }
+
+    public void setReceiveForTheOption(int receiveForTheOption) {
+        this.receiveForTheOption = receiveForTheOption;
+    }
+
+    public void setGoodReceive(int goodReceive) {
+        this.goodReceive = goodReceive;
+    }
+
+    public void setHardToSet(int hardToSet) {
+        this.hardToSet = hardToSet;
+    }
+
+    public void setReceiveError(int receiveError) {
+        this.receiveError = receiveError;
+    }
+
+    public void setSpikeKill(int spikeKill) {
+        this.spikeKill = spikeKill;
+    }
+
+    public void setSpikeError(int spikeError) {
+        this.spikeError = spikeError;
+    }
+
+    public void setCutShotKill(int cutShotKill) {
+        this.cutShotKill = cutShotKill;
+    }
+
+    public void setCutShotError(int cutShotError) {
+        this.cutShotError = cutShotError;
+    }
+
+    public void setSpikeAttempt(int spikeAttempt) {
+        this.spikeAttempt = spikeAttempt;
+    }
+
+    public void setCutShotAttempt(int cutShotAttempt) {
+        this.cutShotAttempt = cutShotAttempt;
+    }
+
+    public void setMonsterBlock(int monsterBlock) {
+        this.monsterBlock = monsterBlock;
+    }
+
+    public void setBlockTouch(int blockTouch) {
+        this.blockTouch = blockTouch;
+    }
+
+    public void setBlockError(int blockError) {
+        this.blockError = blockError;
+    }
+
+    public void setDig(int dig) {
+        this.dig = dig;
+    }
+
+    public void setDigError(int digError) {
+        this.digError = digError;
+    }
 
     /** Updates overall player statistics. */
     public void updateOverallStats() {

@@ -21,65 +21,97 @@ public class Set {
     private int rallyCounter;
     private int secondBallPoints;
 
-    // Serve statistics
-    private int floatServe;
-    private int jumpServe;
-    private int serveAce;
-    private int serveAttempt;
-    private int serveError;
 
-    // Receive statistics
-    private int receiveForTheOption;
-    private int goodReceive;
-    private int hardToSet;
-    private int receiveError;
+    public Set(int set) {
+            this.setNumber = set;
+            this.teamOnePoints = 0;
+            this.teamTwoPoints = 0;
+            this.isFinished = false;
+            this.whoWon = 0;
+            this.rallyCounter = 0;
+            this.secondBallPoints = 0;
+        }
 
-    // Attack statistics
-    private int spikeKill;
-    private int spikeError;
-    private int cutShotKill;
-    private int cutShotError;
-    private int spikeAttempt;
-    private int cutShotAttempt;
 
-    // Block statistics
-    private int monsterBlock;
-    private int veryGoodBlockTouch;
-    private int blockTouch;
-    private int blockOut;
+    public Set(int setNumber, int teamOnePoints, int teamTwoPoints, boolean isFinished, int whoWon, int rallyCounter, int secondBallPoints) {
+        this.setNumber = setNumber;
+        this.teamOnePoints = teamOnePoints;
+        this.teamTwoPoints = teamTwoPoints;
+        this.isFinished = isFinished;
+        this.whoWon = whoWon;
+        this.rallyCounter = rallyCounter;
+        this.secondBallPoints = secondBallPoints;
+    }
 
-    // Dig statistics
-    private int dig;
-    private int digError;
+    public void setTeamOnePoints(int teamOnePoints) {
+        this.teamOnePoints = teamOnePoints;
+    }
 
-    /** Adds one point to Team 1. */
+    public void setTeamTwoPoints(int teamTwoPoints) {
+        this.teamTwoPoints = teamTwoPoints;
+    }
+
+    public void setFinished(boolean finished) {
+        isFinished = finished;
+    }
+
+    public void setWhoWon(int whoWon) {
+        this.whoWon = whoWon;
+    }
+
+    public void setRallyCounter(int rallyCounter) {
+        this.rallyCounter = rallyCounter;
+    }
+
+    public void setSecondBallPoints(int secondBallPoints) {
+        this.secondBallPoints = secondBallPoints;
+    }
+
+    public void setSetNumber(int setNumber) {
+        this.setNumber = setNumber;
+    }
+
+    public int getSetNumber() {
+        return setNumber;
+    }
+
+    public int getTeamOnePoints() {
+        return teamOnePoints;
+    }
+
+    public int getTeamTwoPoints() {
+        return teamTwoPoints;
+    }
+
     public void addPointToTeamOne() {
-        // TODO: Increase teamOnePoints.
+        this.teamOnePoints +=1;
     }
 
-    /** Adds one point to Team 2. */
+
     public void addPointToTeamTwo() {
-        // TODO: Increase teamTwoPoints.
+        this.teamTwoPoints +=1;
+    }
+    public void removePointFromTeamOne() {
+        this.teamOnePoints -= 1;
     }
 
-    /** Checks whether this set is finished. */
+    public void removePointFromTeamTwo() {
+        this.teamTwoPoints -= 1;
+    }
+
+
     public boolean checkSetFinished() {
-        // TODO: Apply set rules: first sets to 21, third set to 15, with 2-point difference.
+        if(getTeamOnePoints() >21 && getTeamTwoPoints() <19){return true;}
+        if(getTeamTwoPoints() > 21 && getTeamOnePoints() < 19){return true;}
+        if(getTeamOnePoints() > 21 && getTeamTwoPoints() > 21 && ((getTeamOnePoints() - getTeamTwoPoints()) == 2 || (getTeamTwoPoints() - getTeamOnePoints() == 2))){return true;}
         return false;
     }
 
-    /** Resets the score to 0:0. */
-    public void resetScore() {
-        // TODO: Reset team points.
-    }
-
-    /** Increases rally counter. */
     public void increaseRallyCounter() {
-        // TODO: Increase rallyCounter.
+        this.rallyCounter +=1;
     }
 
-    /** Increases second ball points counter. */
     public void increaseSecondBallPoints() {
-        // TODO: Increase secondBallPoints.
+        this.secondBallPoints +=1;
     }
 }
