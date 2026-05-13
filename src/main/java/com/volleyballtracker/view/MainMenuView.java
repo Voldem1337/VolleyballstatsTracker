@@ -1,27 +1,16 @@
 package com.volleyballtracker.view;
 
+import com.volleyballtracker.controller.MainMenuController;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
 
-/**
- * MainMenuView
- *
- * Экран главного меню.
- * Здесь позже будут кнопки:
- * - New Game
- * - Open Game
- * - Export Stats
- * - Exit
- */
+
 public class MainMenuView {
     private VBox root;
-
     private Button newGameButton;
     private Button openGameButton;
     private Button exitButton;

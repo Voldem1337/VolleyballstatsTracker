@@ -1,5 +1,6 @@
 package com.volleyballtracker.controller;
 
+import com.volleyballtracker.util.SceneManager;
 import com.volleyballtracker.view.MainMenuView;
 import javafx.stage.Stage;
 
@@ -12,26 +13,27 @@ import javafx.stage.Stage;
  * - Export Stats
  * - Exit
  */
+
+
 public class MainMenuController {
-    private MainMenuView view;
-    private Stage stage;
 
-    public MainMenuController(MainMenuView view, Stage stage) {
+    private final MainMenuView view;
+    private final SceneManager sceneManager;
+
+    public MainMenuController(MainMenuView view, SceneManager sceneManager) {
         this.view = view;
-        this.stage = stage;
-        connectActions();
+        this.sceneManager = sceneManager;
 
+        connectActions();
     }
 
-    private void connectActions(){
+    private void connectActions() {
         view.getNewGameButton().setOnAction(event -> {
-            System.out.println("New game clicked");
+            sceneManager.switchToNewGame();
         });
-        view.getOpenGameButton().setOnAction(event -> {
-            System.out.println("Oppen game");
-        });
+
         view.getExitButton().setOnAction(event -> {
-            stage.close();
+            sceneManager.closeApp();
         });
     }
 }
