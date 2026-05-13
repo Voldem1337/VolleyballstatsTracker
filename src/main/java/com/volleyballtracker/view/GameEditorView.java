@@ -184,33 +184,33 @@ public class GameEditorView {
         root.setCenter(actionsGrid);
         root.setBottom(bottomBox);
 
-        setActionButtonSize(playerOneAttackButton);
-        setActionButtonSize(playerOneReceiveButton);
-        setActionButtonSize(playerOneBlockButton);
-        setActionButtonSize(playerOneDigButton);
+        setButtonSizeBig(playerOneAttackButton);
+        setButtonSizeBig(playerOneReceiveButton);
+        setButtonSizeBig(playerOneBlockButton);
+        setButtonSizeBig(playerOneDigButton);
 
-        setActionButtonSize(playerTwoAttackButton);
-        setActionButtonSize(playerTwoReceiveButton);
-        setActionButtonSize(playerTwoBlockButton);
-        setActionButtonSize(playerTwoDigButton);
+        setButtonSizeBig(playerTwoAttackButton);
+        setButtonSizeBig(playerTwoReceiveButton);
+        setButtonSizeBig(playerTwoBlockButton);
+        setButtonSizeBig(playerTwoDigButton);
 
-        setActionButtonSize(playerThreeAttackButton);
-        setActionButtonSize(playerThreeReceiveButton);
-        setActionButtonSize(playerThreeBlockButton);
-        setActionButtonSize(playerThreeDigButton);
+        setButtonSizeBig(playerThreeAttackButton);
+        setButtonSizeBig(playerThreeReceiveButton);
+        setButtonSizeBig(playerThreeBlockButton);
+        setButtonSizeBig(playerThreeDigButton);
 
-        setActionButtonSize(playerFourAttackButton);
-        setActionButtonSize(playerFourReceiveButton);
-        setActionButtonSize(playerFourBlockButton);
-        setActionButtonSize(playerFourDigButton);
+        setButtonSizeBig(playerFourAttackButton);
+        setButtonSizeBig(playerFourReceiveButton);
+        setButtonSizeBig(playerFourBlockButton);
+        setButtonSizeBig(playerFourDigButton);
 
-        setActionButtonSize(newSetButton);
-        setActionButtonSize(editScoreButton);
-        setActionButtonSize(editStatsButton);
-        setActionButtonSize(exitButton);
-        setActionButtonSize(exportButton);
-        setActionButtonSize(rallyCounterButton);
-        setActionButtonSize(secondBallPointsButton);
+        setButtonSizeBig(newSetButton);
+        setButtonSizeBig(editScoreButton);
+        setButtonSizeBig(editStatsButton);
+        setButtonSizeBig(exitButton);
+        setButtonSizeBig(exportButton);
+        setButtonSizeBig(rallyCounterButton);
+        setButtonSizeBig(secondBallPointsButton);
 
     }
 
@@ -310,7 +310,7 @@ public class GameEditorView {
         return newSetButton;
     }
 
-    private void setActionButtonSize(Button button) {
+    private void setButtonSizeBig(Button button) {
         button.setPrefWidth(120);
         button.setPrefHeight(50);
     }

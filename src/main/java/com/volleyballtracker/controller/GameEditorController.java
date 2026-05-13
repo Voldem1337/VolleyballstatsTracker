@@ -137,7 +137,7 @@ public class GameEditorController {
         });
     }
 
-
+    /** Handles Attack button for selected player. */
     private void openAttackDialog(String playerName) {
         ChoiceDialog<String> dialog = new ChoiceDialog<>(
                 "Spike kill",
@@ -158,6 +158,7 @@ public class GameEditorController {
         });
     }
 
+    /** Handles Receive button for selected player. */
     private void openReceiveDialog(String playerName) {
         ChoiceDialog<String> dialog = new ChoiceDialog<>(
                 "Good receive",
@@ -177,6 +178,7 @@ public class GameEditorController {
         });
     }
 
+    /** Handles Block button for selected player. */
     private void openBlockDialog(String playerName) {
         ChoiceDialog<String> dialog = new ChoiceDialog<>(
                 "Monster block",
@@ -195,6 +197,7 @@ public class GameEditorController {
         });
     }
 
+    /** Handles Dig button for selected player. */
     private void openDigDialog(String playerName) {
         ChoiceDialog<String> dialog = new ChoiceDialog<>(
                 "Dig",
@@ -220,26 +223,6 @@ public class GameEditorController {
     /** Refreshes score, current set, player names, and visual state. */
     private void refreshScreen() {
         // TODO: Update all UI elements.
-    }
-
-    /** Handles Attack button for selected player. */
-    public void onAttackClicked() {
-        // TODO: Ask result: Spike kill, Spike error, Cut shot kill, Cut shot error, Spike attempt, Cut shot attempt.
-    }
-
-    /** Handles Receive button for selected player. */
-    public void onReceiveClicked() {
-        // TODO: Ask result: For the option, Good receive, Hard to set, Receive error.
-    }
-
-    /** Handles Block button for selected player. */
-    public void onBlockClicked() {
-        // TODO: Ask result: Monster Block, Very good Block touch, Block touch, Block out.
-    }
-
-    /** Handles Dig button for selected player. */
-    public void onDigClicked() {
-        // TODO: Ask result: Dig or Dig error.
     }
 
     /** Creates a new set and resets score to 0:0. */

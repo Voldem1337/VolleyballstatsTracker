@@ -15,7 +15,7 @@ public class MainApp extends Application {
         stage.setResizable(false);
 
         sceneManager.switchToMainMenu();
-
+        sceneManager.switchToEditStats();
         stage.show();
     }
 

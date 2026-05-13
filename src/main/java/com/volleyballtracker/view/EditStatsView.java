@@ -1,15 +1,14 @@
 package com.volleyballtracker.view;
 
+import com.volleyballtracker.model.Player;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
-import java.time.LocalDateTime;
-
-import static com.volleyballtracker.model.ActionResult.SPIKE_KILL;
-import static com.volleyballtracker.model.ActionType.ATTACK;
+import javafx.scene.text.Font;
 
 /**
  * EditStatsView
@@ -21,7 +20,7 @@ public class EditStatsView {
     private VBox root;
 
     private Label titleLabel;
-    private ListView<String> actionRecordListView;
+    private ListView<Player> statsOfPlayers;
     private HBox buttonsBox;
 
     private Button editButton;
@@ -41,18 +40,28 @@ public class EditStatsView {
         root = new VBox(15);
 
         titleLabel = new Label("Edit Stats");
-        actionRecordListView = new ListView<>();
+        titleLabel.setPadding(new Insets(20,0,0,30));
+        titleLabel.setFont(Font.font(30));
 
+        statsOfPlayers = new ListView<>();
 
         editButton = new Button("Edit");
         deleteButton = new Button("Delete");
         saveButton = new Button("Save");
         backButton = new Button("Back");
 
-        buttonsBox = new HBox(15);
+        setButtonSizeBig(editButton);
+        setButtonSizeBig(deleteButton);
+        setButtonSizeBig(saveButton);
+        setButtonSizeBig(backButton);
+
+
+
+        buttonsBox = new HBox(20);
+        buttonsBox.setPadding(new Insets(10, 0, 0, 20));
         buttonsBox.getChildren().addAll(editButton, deleteButton, saveButton, backButton);
 
-        root.getChildren().addAll(titleLabel, actionRecordListView, buttonsBox);
+        root.getChildren().addAll(titleLabel, statsOfPlayers, buttonsBox);
 
     }
 
@@ -64,9 +73,9 @@ public class EditStatsView {
         return titleLabel;
     }
 
-    public ListView<String> getActionRecordListView() {
+    public ListView<Player> getStatsOfPlayers() {
 
-        return actionRecordListView;
+        return statsOfPlayers;
     }
 
     public HBox getButtonsBox() {
@@ -87,5 +96,10 @@ public class EditStatsView {
 
     public Button getBackButton() {
         return backButton;
+    }
+
+    private void setButtonSizeBig(Button button) {
+        button.setPrefWidth(120);
+        button.setPrefHeight(50);
     }
 }
