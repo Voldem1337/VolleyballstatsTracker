@@ -1,6 +1,8 @@
 package com.volleyballtracker.util;
 
+import com.volleyballtracker.controller.GameEditorController;
 import com.volleyballtracker.controller.MainMenuController;
+import com.volleyballtracker.view.GameEditorView;
 import com.volleyballtracker.view.MainMenuView;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -40,6 +42,11 @@ public class SceneManager {
     /** Opens Game Editor screen. */
     public void switchToGameEditor() {
         // TODO: Load Game Editor screen.
+        GameEditorView view = new GameEditorView();
+        new GameEditorController(view, stage);
+        Scene scene = new Scene(view.getRoot(), 900, 600);
+        stage.setScene(scene);
+
     }
 
     /** Opens Export Stats screen. */

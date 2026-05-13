@@ -1,6 +1,5 @@
 package com.volleyballtracker.view;
 
-import com.volleyballtracker.model.ActionRecord;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -22,7 +21,7 @@ public class EditStatsView {
     private VBox root;
 
     private Label titleLabel;
-    private ListView<ActionRecord> actionRecordListView;
+    private ListView<String> actionRecordListView;
     private HBox buttonsBox;
 
     private Button editButton;
@@ -54,16 +53,6 @@ public class EditStatsView {
         buttonsBox.getChildren().addAll(editButton, deleteButton, saveButton, backButton);
 
         root.getChildren().addAll(titleLabel, actionRecordListView, buttonsBox);
-        ActionRecord actionRecord = new ActionRecord(1,
-                1,
-                "Demjan",
-                "Aleksei/Demjan",
-                ATTACK,
-                SPIKE_KILL,
-                true,
-                1,
-                LocalDateTime.now());
-        actionRecordListView.getItems().add(actionRecord);
 
     }
 
@@ -75,7 +64,7 @@ public class EditStatsView {
         return titleLabel;
     }
 
-    public ListView<ActionRecord> getActionRecordListView() {
+    public ListView<String> getActionRecordListView() {
 
         return actionRecordListView;
     }

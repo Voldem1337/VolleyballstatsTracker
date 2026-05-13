@@ -8,18 +8,48 @@ package com.volleyballtracker.model;
  */
 public class Player {
 
-    private int playerId;
     private String name;
     private PlayerPosition position;
     private String teamName;
 
-    private int ovlAttack;
-    private int ovlReceive;
-    private int ovlDig;
-    private int ovlBlock;
+    private int overallAttack;
+    private int overallReceive;
+    private int overallDig;
+    private int overallBlock;
 
     private int totalPoints;
     private int totalErrors;
+
+    // Serve
+    private int floatServe;
+    private int jumpServe;
+    private int ace;
+    private int serveAttempt;
+    private int serveError;
+
+    // Receive
+    private int receiveForTheOption;
+    private int goodReceive;
+    private int hardToSet;
+    private int receiveError;
+
+    // Attack
+    private int spikeKill;
+    private int spikeError;
+    private int cutShotKill;
+    private int cutShotError;
+    private int spikeAttempt;
+    private int cutShotAttempt;
+
+    // Block
+    private int monsterBlock;
+    private int veryGoodBlockTouch;
+    private int blockTouch;
+    private int blockOut;
+
+    // Dig
+    private int dig;
+    private int digError;
 
     /** Updates overall player statistics. */
     public void updateOverallStats() {
