@@ -43,6 +43,7 @@ public class Player {
     // Dig
     private int dig;
     private int digError;
+    public Player() {}
 
     public Player(String name, String position, String teamName) {
         this.name = name;

@@ -1,14 +1,8 @@
 package com.volleyballtracker.util;
 
-import com.volleyballtracker.controller.EditStatsController;
-import com.volleyballtracker.controller.GameEditorController;
-import com.volleyballtracker.controller.MainMenuController;
-import com.volleyballtracker.controller.NewGameController;
+import com.volleyballtracker.controller.*;
 import com.volleyballtracker.model.Match;
-import com.volleyballtracker.view.EditStatsView;
-import com.volleyballtracker.view.GameEditorView;
-import com.volleyballtracker.view.MainMenuView;
-import com.volleyballtracker.view.NewGameView;
+import com.volleyballtracker.view.*;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -51,12 +45,15 @@ import javafx.stage.Stage;
 
     /** Opens Open Game screen. */
     public void switchToOpenGame() {
-        // TODO: Load Open Game screen.
+        OpenGameView view = new OpenGameView();
+
+        new OpenGameController(view,this);
+        Scene scene = new Scene(view.getRoot(), 900, 600);
+        stage.setScene(scene);
     }
 
     /** Opens Game Editor screen. */
     public void switchToGameEditor(Match match) {
-        // TODO: Load Game Editor screen.
         GameEditorView view = new GameEditorView();
 
         new GameEditorController(view, stage,match);
@@ -66,7 +63,6 @@ import javafx.stage.Stage;
 
     /** Opens Edit Stats screen. */
     public void switchToEditStats() {
-        // TODO: Load Game Editor screen.
         EditStatsView view = new EditStatsView();
 
         new EditStatsController(view, stage);
@@ -74,8 +70,5 @@ import javafx.stage.Stage;
         stage.setScene(scene);
     }
 
-    /** Opens Export Stats screen. */
-    public void switchToExportStats() {
-        // TODO: Load Export Stats screen.
-    }
+
 }

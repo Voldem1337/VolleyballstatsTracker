@@ -2,6 +2,7 @@ package com.volleyballtracker.storage;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.volleyballtracker.model.Match;
+import com.volleyballtracker.model.MatchFileInfo;
 
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
@@ -9,6 +10,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.net.URISyntaxException;
+
 
 /**
  * JSON implementation of MatchRepository.
@@ -17,33 +20,46 @@ import java.util.List;
  * - Save matches into resources/data/matches.
  * - Load matches from JSON files.
  */
-public class JsonMatchRepository {
-    private ObjectMapper objectMapper;
 
-    /**
-     * Saves match into JSON file.
-     */
-    public void saveToJson(Match match, String filename) {
-        objectMapper = new ObjectMapper();
+
+
+public class JsonMatchRepository {
+    private final ObjectMapper objectMapper;
+
+    public JsonMatchRepository() {
+        this.objectMapper = new ObjectMapper();
+    }
+
+    private Path getMatchesFolder() {
         try {
-            Path folderPath = Path.of("data", "matches");
+            var resource = getClass().getResource("/data/matches");
+            if (resource != null) {
+                return Path.of(resource.toURI());
+            }
+        } catch (URISyntaxException e) {
+        }
+        return Path.of("src", "main", "resources", "data", "matches");
+    }
+
+    public void saveToJson(Match match, String filename) {
+        try {
+            Path folderPath = getMatchesFolder();
+
             if (!Files.exists(folderPath)) {
                 Files.createDirectories(folderPath);
             }
+
             Path filepath = folderPath.resolve(filename);
             objectMapper.writeValue(filepath.toFile(), match);
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    /**
-     * Loads one match from JSON file.
-     */
     public Match loadMatch(String fileName) {
         try {
-            Path filePath = Path.of("data", "matches", fileName);
-
+            Path filePath = getMatchesFolder().resolve(fileName);
             return objectMapper.readValue(filePath.toFile(), Match.class);
 
         } catch (IOException e) {
@@ -51,46 +67,49 @@ public class JsonMatchRepository {
         }
     }
 
-    /**
-     * Loads all JSON match files from folder.
-     */
-    public List<String> loadAllJsonMatches() {
+    public List<MatchFileInfo> loadAllJsonMatches() {
         try {
-            Path folderPath = Path.of("data", "matches");
+            Path folderPath = getMatchesFolder();
 
             if (!Files.exists(folderPath)) {
                 Files.createDirectories(folderPath);
                 return List.of();
             }
 
-            List<String> matchNames = new ArrayList<>();
+            List<MatchFileInfo> matches = new ArrayList<>();
+
 
             try (DirectoryStream<Path> stream = Files.newDirectoryStream(folderPath, "*.json")) {
                 for (Path filePath : stream) {
                     Match match = objectMapper.readValue(filePath.toFile(), Match.class);
-                    matchNames.add(match.getMatchName());
+
+                    String fileName = filePath.getFileName().toString();
+                    String matchName = match.getMatchName();
+                    System.out.println(fileName);
+                    matches.add(new MatchFileInfo(fileName, matchName));
                 }
             }
 
-            return matchNames;
+            return matches;
 
         } catch (IOException e) {
             throw new RuntimeException("Could not read match files", e);
         }
-
     }
 
     public void deleteMatch(String fileName) {
         try {
-            Path filePath = Path.of("data", "matches", fileName);
+            System.out.println("Deleting: " + fileName);
 
-            boolean deleted = Files.deleteIfExists(filePath);
+            // Удаляем из target/classes (рабочая копия)
+            Path targetFile = getMatchesFolder().resolve(fileName);
+            Files.deleteIfExists(targetFile);
 
-            if (deleted) {
-                System.out.println("Deleted match file: " + filePath.toAbsolutePath());
-            } else {
-                System.out.println("File not found: " + filePath.toAbsolutePath());
-            }
+            // Удаляем из src/main/resources (оригинал)
+            Path sourceFile = Path.of("src", "main", "resources", "data", "matches", fileName);
+            Files.deleteIfExists(sourceFile);
+
+            System.out.println("Deleted from both locations");
 
         } catch (IOException e) {
             throw new RuntimeException("Could not delete match file", e);

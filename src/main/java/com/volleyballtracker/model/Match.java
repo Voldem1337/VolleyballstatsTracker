@@ -1,6 +1,8 @@
 package com.volleyballtracker.model;
 
-import java.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,8 +12,8 @@ import java.util.List;
  * Stores match information, players, teams, sets, score by sets,
  * file name and path for saving/exporting.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Match {
-
 
     // Example: Volõnski/Voltšihhin vs Korotkov/Tiisar
     private String matchName;
@@ -38,6 +40,7 @@ public class Match {
     private String whoWon;
 
     private String fileName;
+    public Match() {}
 
     public Match(String matchName, String date,String teamOneName, String teamTwoName,String fileName,String player1name,String player2name,String player3name,String player4name, String player1Position,String player2Position, String player3Position,String player4Position){
         this.matchName = matchName;
@@ -69,6 +72,7 @@ public class Match {
     }
 
 
+
     public Match(String matchName, String date, String teamOneName, String teamTwoName, int currentSetNumber, Player player1, Player player2, Player player3, Player player4, int teamOneSetsWon, int teamTwoSetsWon, List<Set> sets, boolean isFinished, String whoWon, String fileName) {
         this.matchName = matchName;
         this.date = date;
@@ -86,6 +90,16 @@ public class Match {
         this.whoWon = whoWon;
         this.fileName = fileName;
     }
+    @JsonProperty("isFinished")
+    public boolean isFinished() {
+        return isFinished;
+    }
+    @JsonProperty("isFinished")
+    public void setFinished(boolean finished) {
+        isFinished = finished;
+    }
+
+
 
 
 
@@ -120,9 +134,6 @@ public class Match {
         return whoWon;
     }
 
-    public boolean isFinished() {
-        return isFinished;
-    }
 
     public List<Set> getSets() {
         return sets;
@@ -220,9 +231,6 @@ public class Match {
         this.sets = sets;
     }
 
-    public void setFinished(boolean finished) {
-        isFinished = finished;
-    }
 
     public void setWhoWon(String whoWon) {
         this.whoWon = whoWon;
@@ -232,3 +240,5 @@ public class Match {
         this.fileName = fileName;
     }
 }
+
+

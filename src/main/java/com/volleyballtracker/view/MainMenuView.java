@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
@@ -14,6 +15,7 @@ public class MainMenuView {
     private Button newGameButton;
     private Button openGameButton;
     private Button exitButton;
+    private Button autfillButton;
 
 
     public MainMenuView() {
@@ -29,7 +31,11 @@ public class MainMenuView {
         newGameButton.setPrefWidth(200);
         openGameButton.setPrefWidth(200);
         exitButton.setPrefWidth(200);
-        root.getChildren().addAll(title,newGameButton, openGameButton, exitButton);
+        autfillButton = new Button("Autofill Edit");
+        autfillButton.setPrefWidth(200);
+
+
+        root.getChildren().addAll(title,newGameButton, openGameButton, autfillButton, exitButton);
     }
 
     public Parent getRoot() {
@@ -46,5 +52,9 @@ public class MainMenuView {
 
     public Button getExitButton() {
         return exitButton;
+    }
+
+    public Button getAutfillButton() {
+        return autfillButton;
     }
 }

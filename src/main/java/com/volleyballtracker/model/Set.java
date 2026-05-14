@@ -1,11 +1,13 @@
 package com.volleyballtracker.model;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * Model class for one set.
  *
  * Stores score, set number, rally counter, second ball points,
  * and action statistics for Serve, Receive, Attack, Block, and Dig.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Set {
 
     private int setNumber;
@@ -20,6 +22,8 @@ public class Set {
 
     private int rallyCounter;
     private int secondBallPoints;
+
+    public Set() {}
 
 
     public Set(int set) {
@@ -51,9 +55,6 @@ public class Set {
         this.teamTwoPoints = teamTwoPoints;
     }
 
-    public void setFinished(boolean finished) {
-        isFinished = finished;
-    }
 
     public void setWhoWon(int whoWon) {
         this.whoWon = whoWon;
@@ -121,9 +122,7 @@ public class Set {
         this.secondBallPoints +=1;
     }
 
-    public boolean isFinished() {
-        return isFinished;
-    }
+
 
     public int getWhoWon() {
         return whoWon;
@@ -135,6 +134,15 @@ public class Set {
 
     public int getSecondBallPoints() {
         return secondBallPoints;
+    }
+    @JsonProperty("isFinished")
+    public boolean isFinished() {
+        return isFinished;
+    }
+
+    @JsonProperty("isFinished")
+    public void setFinished(boolean finished) {
+        isFinished = finished;
     }
 
 }
