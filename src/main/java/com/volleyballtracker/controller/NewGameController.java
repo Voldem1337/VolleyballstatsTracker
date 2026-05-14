@@ -40,7 +40,7 @@ public class NewGameController {
             if(view.AutofillBoxiscliked()){
 
                 List<String> loetud = readAutofillFile();
-                if (loetud.size() == 4){
+                if (loetud.size() >= 4){
                     String player1Name = loetud.get(0);
 
 
@@ -52,6 +52,7 @@ public class NewGameController {
                 view.insertData(player1Name,player2Name,player1Position,player2Position);}
                 else {
                     showError("AUTOFILL ERROR", "File does not have enough data.");
+                    view.getAutofillCheckBox().setSelected(false);
                 }
             }
             else {
@@ -90,9 +91,8 @@ public class NewGameController {
             ).lines().toList();
 
             if (lines.size() < 4) {
-                throw new IllegalArgumentException("Autofill file does not have enough data");
+                return List.of();
             }
-
 
         return lines;
     }
@@ -135,24 +135,28 @@ public class NewGameController {
                     "Missing player position",
                     "Please choose a position for Player 1."
             );
+            return false;
         }
         if(view.getPositionBox2String().equals("Choose your position")){
             showError(
                     "Missing player position",
                     "Please choose a position for Player 2."
             );
+            return false;
         }
         if(view.getPositionBox3String().equals("Choose your position")){
             showError(
                     "Missing player position",
                     "Please choose a position for Player 3."
             );
+            return false;
         }
         if(view.getPositionBox4String().equals("Choose your position")){
             showError(
                     "Missing player position",
                     "Please choose a position for Player 4."
             );
+            return false;
         }
 
 

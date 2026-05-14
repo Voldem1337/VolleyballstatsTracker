@@ -69,6 +69,12 @@ import javafx.stage.Stage;
         Scene scene = new Scene(view.getRoot(), 900, 600);
         stage.setScene(scene);
     }
+    public void switchToExportStats() {
+        ExportStatsView view = new ExportStatsView();
+        new ExportStatsController(view, this);
+        Scene scene = new Scene(view.getRoot(), 900, 600);
+        stage.setScene(scene);
+    }
 
 
 }
