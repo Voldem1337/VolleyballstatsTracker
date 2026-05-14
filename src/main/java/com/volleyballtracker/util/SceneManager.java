@@ -59,7 +59,7 @@ import javafx.stage.Stage;
         // TODO: Load Game Editor screen.
         GameEditorView view = new GameEditorView();
 
-        new GameEditorController(view, stage);
+        new GameEditorController(view, stage,match);
         Scene scene = new Scene(view.getRoot(), 900, 600);
         stage.setScene(scene);
     }

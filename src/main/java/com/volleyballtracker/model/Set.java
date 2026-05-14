@@ -120,4 +120,21 @@ public class Set {
     public void increaseSecondBallPoints() {
         this.secondBallPoints +=1;
     }
+
+    public boolean isFinished() {
+        return isFinished;
+    }
+
+    public int getWhoWon() {
+        return whoWon;
+    }
+
+    public int getRallyCounter() {
+        return rallyCounter;
+    }
+
+    public int getSecondBallPoints() {
+        return secondBallPoints;
+    }
+
 }

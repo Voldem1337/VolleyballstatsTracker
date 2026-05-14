@@ -29,7 +29,7 @@ public class NewGameController {
         view.getSelectButton().setOnAction(event -> {
             if (isFormValid()){
                 List<String> teams_name = List.of(view.getMatchNameFieldString().split("vs"));
-                Match new_match = new Match(view.getMatchNameFieldString(), view.getDate(), teams_name.get(0),teams_name.get(1),view.getImport_file(),"/data/matches/",
+                Match new_match = new Match(view.getMatchNameFieldString(), view.getDate(), teams_name.get(0),teams_name.get(1),view.getImport_file(),
                         view.getPlayer1FieldString(), view.getPlayer2FieldString(), view.getPlayer3FieldString(), view.getPlayer4FieldString(), view.getPositionBox1String(), view.getPositionBox2String(),
                         view.getPositionBox3String(), view.getPositionBox4String());
 

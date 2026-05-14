@@ -38,9 +38,8 @@ public class Match {
     private String whoWon;
 
     private String fileName;
-    private String filePath;
 
-    public Match(String matchName, String date,String teamOneName, String teamTwoName,String fileName, String filePath,String player1name,String player2name,String player3name,String player4name, String player1Position,String player2Position, String player3Position,String player4Position){
+    public Match(String matchName, String date,String teamOneName, String teamTwoName,String fileName,String player1name,String player2name,String player3name,String player4name, String player1Position,String player2Position, String player3Position,String player4Position){
         this.matchName = matchName;
         this.date = date;
         this.teamOneName = teamOneName;
@@ -66,12 +65,11 @@ public class Match {
         this.whoWon = "Match not finished";
 
         this.fileName = fileName;
-        this.filePath = filePath;
 
     }
 
 
-    public Match(String matchName, String date, String teamOneName, String teamTwoName, int currentSetNumber, Player player1, Player player2, Player player3, Player player4, int teamOneSetsWon, int teamTwoSetsWon, List<Set> sets, boolean isFinished, String whoWon, String fileName, String filePath) {
+    public Match(String matchName, String date, String teamOneName, String teamTwoName, int currentSetNumber, Player player1, Player player2, Player player3, Player player4, int teamOneSetsWon, int teamTwoSetsWon, List<Set> sets, boolean isFinished, String whoWon, String fileName) {
         this.matchName = matchName;
         this.date = date;
         this.teamOneName = teamOneName;
@@ -87,7 +85,6 @@ public class Match {
         this.isFinished = isFinished;
         this.whoWon = whoWon;
         this.fileName = fileName;
-        this.filePath = filePath;
     }
 
 
@@ -115,5 +112,123 @@ public class Match {
         set.setWhoWon(winner);
     }
 
+    public String getFileName() {
+        return fileName;
+    }
 
+    public String getWhoWon() {
+        return whoWon;
+    }
+
+    public boolean isFinished() {
+        return isFinished;
+    }
+
+    public List<Set> getSets() {
+        return sets;
+    }
+
+    public int getTeamTwoSetsWon() {
+        return teamTwoSetsWon;
+    }
+
+    public int getTeamOneSetsWon() {
+        return teamOneSetsWon;
+    }
+
+    public Player getPlayer4() {
+        return player4;
+    }
+
+    public Player getPlayer3() {
+        return player3;
+    }
+
+    public Player getPlayer2() {
+        return player2;
+    }
+
+    public Player getPlayer1() {
+        return player1;
+    }
+
+    public String getTeamTwoName() {
+        return teamTwoName;
+    }
+
+    public String getTeamOneName() {
+        return teamOneName;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public int getCurrentSetNumber() {
+        return CurrentSetNumber;
+    }
+
+    public String getMatchName() {
+        return matchName;
+    }
+
+    public void setMatchName(String matchName) {
+        this.matchName = matchName;
+    }
+
+    public void setCurrentSetNumber(int currentSetNumber) {
+        CurrentSetNumber = currentSetNumber;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void setTeamOneName(String teamOneName) {
+        this.teamOneName = teamOneName;
+    }
+
+    public void setTeamTwoName(String teamTwoName) {
+        this.teamTwoName = teamTwoName;
+    }
+
+    public void setPlayer1(Player player1) {
+        this.player1 = player1;
+    }
+
+    public void setPlayer2(Player player2) {
+        this.player2 = player2;
+    }
+
+    public void setPlayer3(Player player3) {
+        this.player3 = player3;
+    }
+
+    public void setPlayer4(Player player4) {
+        this.player4 = player4;
+    }
+
+    public void setTeamOneSetsWon(int teamOneSetsWon) {
+        this.teamOneSetsWon = teamOneSetsWon;
+    }
+
+    public void setTeamTwoSetsWon(int teamTwoSetsWon) {
+        this.teamTwoSetsWon = teamTwoSetsWon;
+    }
+
+    public void setSets(List<Set> sets) {
+        this.sets = sets;
+    }
+
+    public void setFinished(boolean finished) {
+        isFinished = finished;
+    }
+
+    public void setWhoWon(String whoWon) {
+        this.whoWon = whoWon;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 }

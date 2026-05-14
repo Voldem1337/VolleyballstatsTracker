@@ -17,10 +17,12 @@ public class GameEditorController {
 
     private GameEditorView view;
     private Stage stage;
+    private Match match;
 
-    public GameEditorController(GameEditorView view, Stage stage) {
+    public GameEditorController(GameEditorView view, Stage stage, Match match) {
         this.view = view;
         this.stage = stage;
+        this.match = match;
         connectActions();
     }
 
