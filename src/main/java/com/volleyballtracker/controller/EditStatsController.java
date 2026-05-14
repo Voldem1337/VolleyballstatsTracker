@@ -22,13 +22,6 @@ public class EditStatsController {
     }
 
     private void connectActions() {
-        view.getEditButton().setOnAction(actionEvent -> {
-            System.out.println("Edit clicked");
-        });
-
-        view.getDeleteButton().setOnAction(actionEvent -> {
-            System.out.println("Delete clicked");
-        });
 
         view.getSaveButton().setOnAction(actionEvent -> {
             System.out.println("Save clicked");
@@ -40,9 +33,8 @@ public class EditStatsController {
 
     }
 
-    /** Loads all recorded actions of the current match. */
-    public void loadActionHistory() {
-        // TODO: Fill table/list with ActionRecord items.
+    public void loadPlayer() {
+
     }
 
     /** Selects one action from action history. */
