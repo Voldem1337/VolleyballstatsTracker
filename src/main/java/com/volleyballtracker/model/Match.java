@@ -55,7 +55,7 @@ public class Match {
 
         this.teamOneSetsWon = 0;
         this.teamTwoSetsWon = 0;
-        this.CurrentSetNumber = 0;
+        this.CurrentSetNumber = 1;
         Set set1 = new Set(1);
         Set set2 = new Set(2);
 
@@ -95,7 +95,6 @@ public class Match {
 
 
 
-    /** Adds a new Set to this Match. */
     public void addSet() {
         Set set3 = new Set(3);
         this.sets.add(set3);
@@ -105,6 +104,16 @@ public class Match {
     public void finishMatch(String team) {
         this.isFinished = true;
         this.whoWon = team;
+    }
+    public Set neededSet(int i){
+        if (i < 1 || i > sets.size()) {
+            throw new IllegalArgumentException("Set number does not exist: " + i);
+        }
+        return sets.get(i-1);
+    }
+    public void whowonaSet (int setnum, int winner ){
+        Set set = neededSet(setnum);
+        set.setWhoWon(winner);
     }
 
 

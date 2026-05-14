@@ -101,7 +101,7 @@ public class Set {
 
 
     public boolean checkSetFinished() {
-        if(getTeamOnePoints() >21 && getTeamTwoPoints() <19){return true;}
+        if(getTeamOnePoints() > 21 && getTeamTwoPoints() < 19){return true;}
         if(getTeamTwoPoints() > 21 && getTeamOnePoints() < 19){return true;}
         if(getTeamOnePoints() > 21 && getTeamTwoPoints() > 21 && ((getTeamOnePoints() - getTeamTwoPoints()) == 2 || (getTeamTwoPoints() - getTeamOnePoints() == 2))){return true;}
         return false;
