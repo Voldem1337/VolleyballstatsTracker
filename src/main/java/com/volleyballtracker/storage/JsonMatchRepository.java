@@ -85,7 +85,6 @@ public class JsonMatchRepository {
 
                     String fileName = filePath.getFileName().toString();
                     String matchName = match.getMatchName();
-                    System.out.println(fileName);
                     matches.add(new MatchFileInfo(fileName, matchName));
                 }
             }
@@ -99,13 +98,10 @@ public class JsonMatchRepository {
 
     public void deleteMatch(String fileName) {
         try {
-            System.out.println("Deleting: " + fileName);
 
-            // Удаляем из target/classes (рабочая копия)
             Path targetFile = getMatchesFolder().resolve(fileName);
             Files.deleteIfExists(targetFile);
 
-            // Удаляем из src/main/resources (оригинал)
             Path sourceFile = Path.of("src", "main", "resources", "data", "matches", fileName);
             Files.deleteIfExists(sourceFile);
 
