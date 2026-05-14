@@ -1,5 +1,11 @@
 package com.volleyballtracker.storage;
 
+import com.volleyballtracker.model.Match;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 /**
  * JSON implementation of MatchRepository.
  *
@@ -7,11 +13,25 @@ package com.volleyballtracker.storage;
  * - Save matches into resources/data/matches.
  * - Load matches from JSON files.
  */
-public class JsonMatchRepository implements MatchRepository {
+public class JsonMatchRepository {
+
+
 
     /** Saves match into JSON file. */
-    public void saveToJson() {
-        // TODO: Serialize match to JSON.
+    public void saveToJson(Match match, String filename) {
+        try{
+            Path folderPath = Path.of("data", "matches");
+            if (!Files.exists(folderPath)){
+                Files.createDirectories(folderPath);
+            }
+            Path filepath = folderPath.resolve(filename);
+
+
+
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /** Loads one match from JSON file. */
@@ -24,27 +44,22 @@ public class JsonMatchRepository implements MatchRepository {
         // TODO: Scan matches folder and load files.
     }
 
-    @Override
     public void save() {
         // TODO: Implement repository save.
     }
 
-    @Override
     public void findById() {
         // TODO: Implement repository findById.
     }
 
-    @Override
     public void findAll() {
         // TODO: Implement repository findAll.
     }
 
-    @Override
     public void delete() {
         // TODO: Implement repository delete.
     }
 
-    @Override
     public void update() {
         // TODO: Implement repository update.
     }
