@@ -1,19 +1,16 @@
 package com.volleyballtracker.controller;
 
+import com.volleyballtracker.model.ExportToPDF;
 import com.volleyballtracker.model.Match;
 import com.volleyballtracker.model.Player;
 import com.volleyballtracker.model.Set;
+import com.volleyballtracker.storage.JsonMatchRepository;
 import com.volleyballtracker.util.SceneManager;
 import com.volleyballtracker.view.GameEditorView;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ChoiceDialog;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -274,6 +271,8 @@ public class GameEditorController {
     }
 
     public void onExportClicked() {
+        ExportToPDF exportToPDF = new ExportToPDF();
+        exportToPDF.exportToPdf(match);
     }
 
     public void onExitClicked() {
@@ -290,6 +289,10 @@ public class GameEditorController {
 
         alert.showAndWait().ifPresent(result -> {
             if (result == saveButton || result == dontSaveButton) {
+                if(result == saveButton) {
+                    JsonMatchRepository jsonMatchRepository = new JsonMatchRepository();
+                    jsonMatchRepository.saveToJson(match, match.getFileName());
+                }
                 SceneManager sceneManager = new SceneManager(stage);
                 sceneManager.switchToMainMenu();
             }
@@ -300,31 +303,54 @@ public class GameEditorController {
         Set set = getCurrentSet();
         set.setRallyCounter(set.getRallyCounter() + 1);
     }
-
     public void onEditScoreClicked() {
-        Set set = getCurrentSet();
         Stage editScoreStage = new Stage();
         editScoreStage.setTitle("Edit Score");
 
-        TextField teamOneScoreField = new TextField(String.valueOf(set.getTeamOnePoints()));
-        TextField teamTwoScoreField = new TextField(String.valueOf(set.getTeamTwoPoints()));
+        ComboBox<Integer> setComboBox = new ComboBox<>();
 
-        HBox scoreBox = new HBox(10);
-        scoreBox.setAlignment(Pos.CENTER);
-        scoreBox.getChildren().addAll(
-                new Label("Team 1:"),
-                teamOneScoreField,
-                new Label("Team 2:"),
-                teamTwoScoreField
-        );
+        for (int i = 0; i < match.getSets().size(); i++) {
+            setComboBox.getItems().add(i + 1);
+        }
 
-        VBox root = new VBox(15);
-        root.setAlignment(Pos.CENTER);
-        root.setPadding(new Insets(20));
-        root.getChildren().add(scoreBox);
+        setComboBox.setValue(match.getCurrentSetNumber());
+
+        TextField teamOneScoreField = new TextField();
+        TextField teamTwoScoreField = new TextField();
+
+        final boolean[] isUpdating = {false};
+
+        Runnable loadSelectedSet = () -> {
+            Integer selectedSetNumber = setComboBox.getValue();
+
+            if (selectedSetNumber == null) {
+                return;
+            }
+
+            Set selectedSet = match.getSets().get(selectedSetNumber - 1);
+
+            isUpdating[0] = true;
+            teamOneScoreField.setText(String.valueOf(selectedSet.getTeamOnePoints()));
+            teamTwoScoreField.setText(String.valueOf(selectedSet.getTeamTwoPoints()));
+            isUpdating[0] = false;
+        };
+
+        loadSelectedSet.run();
+
+        setComboBox.setOnAction(event -> {
+            Integer selectedSetNumber = setComboBox.getValue();
+
+            if (selectedSetNumber == null) {
+                return;
+            }
+
+            match.setCurrentSetNumber(selectedSetNumber);
+            loadSelectedSet.run();
+            refreshScore();
+        });
 
         teamOneScoreField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.isEmpty()) {
+            if (isUpdating[0] || newValue.isEmpty()) {
                 return;
             }
 
@@ -336,15 +362,17 @@ public class GameEditorController {
                     return;
                 }
 
-                set.setTeamOnePoints(score);
+                Set selectedSet = match.getSets().get(setComboBox.getValue() - 1);
+                selectedSet.setTeamOnePoints(score);
                 refreshScore();
+
             } catch (NumberFormatException e) {
                 teamOneScoreField.setText(oldValue);
             }
         });
 
         teamTwoScoreField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.isEmpty()) {
+            if (isUpdating[0] || newValue.isEmpty()) {
                 return;
             }
 
@@ -356,14 +384,46 @@ public class GameEditorController {
                     return;
                 }
 
-                set.setTeamTwoPoints(score);
+                Set selectedSet = match.getSets().get(setComboBox.getValue() - 1);
+                selectedSet.setTeamTwoPoints(score);
                 refreshScore();
+
             } catch (NumberFormatException e) {
                 teamTwoScoreField.setText(oldValue);
             }
         });
 
-        Scene scene = new Scene(root, 350, 120);
+        Button backButton = new Button("Back");
+        backButton.setPrefWidth(70);
+        backButton.setOnAction(event -> editScoreStage.close());
+
+        HBox setBox = new HBox(10);
+        setBox.setAlignment(Pos.CENTER);
+        setBox.getChildren().addAll(
+                new Label("Set:"),
+                setComboBox
+        );
+
+        HBox scoreBox = new HBox(10);
+        scoreBox.setAlignment(Pos.CENTER);
+        scoreBox.getChildren().addAll(
+                new Label("Team 1:"),
+                teamOneScoreField,
+                new Label("Team 2:"),
+                teamTwoScoreField
+        );
+
+        HBox backBox = new HBox();
+        backBox.setAlignment(Pos.CENTER_LEFT);
+        backBox.getChildren().add(backButton);
+
+        VBox root = new VBox(15);
+        root.setAlignment(Pos.CENTER);
+        root.setPadding(new Insets(20));
+        backBox.setAlignment(Pos.CENTER);
+        root.getChildren().addAll(setBox, scoreBox, backBox);
+
+        Scene scene = new Scene(root, 400, 180);
         editScoreStage.setScene(scene);
         editScoreStage.show();
     }

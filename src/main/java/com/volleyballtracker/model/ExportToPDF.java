@@ -59,18 +59,18 @@ public class ExportToPDF {
     }
 
     private void addMatchInfo(Document doc, Match match) throws DocumentException {
-        // Заголовок
+        // Header
         Paragraph title = new Paragraph(match.getMatchName(), TITLE_FONT);
         title.setAlignment(Element.ALIGN_CENTER);
         doc.add(title);
         doc.add(Chunk.NEWLINE);
 
-        // Инфо о матче
+        // Information
         Paragraph info = new Paragraph();
         info.add(new Chunk("Match info:\n", HEADER_FONT));
         info.add(new Chunk("Date: " + (match.getDate() != null ? match.getDate() : "...") + "\n", NORMAL_FONT));
 
-        // Счёт по сетам
+        // Score
         StringBuilder score = new StringBuilder("Score: ");
         List<Set> sets = match.getSets();
         for (int i = 0; i < sets.size(); i++) {
@@ -84,13 +84,13 @@ public class ExportToPDF {
     }
 
     private void addTeamStats(Document doc, Match match) throws DocumentException {
-        // Команда 1
+        // Team1
         addTeamHeader(doc, match.getTeamOneName());
         addPlayerStats(doc, match.getPlayer1(), match.getPlayer2());
 
-        doc.add(Chunk.NEWLINE);
+        doc.newPage();
 
-        // Команда 2
+        // Team2
         addTeamHeader(doc, match.getTeamTwoName());
         addPlayerStats(doc, match.getPlayer3(), match.getPlayer4());
     }
@@ -102,7 +102,6 @@ public class ExportToPDF {
     }
 
     private void addPlayerStats(Document doc, Player p1, Player p2) throws DocumentException {
-        // Таблица двух игроков рядом
         PdfPTable table = new PdfPTable(2);
         table.setWidthPercentage(100);
         table.setSpacingBefore(6);
@@ -163,20 +162,18 @@ public class ExportToPDF {
         chartTitle.setSpacingBefore(10);
         doc.add(chartTitle);
 
-        // Таблица со статистикой всех 4 игроков
+        //Sheet
         PdfPTable table = new PdfPTable(5);
         table.setWidthPercentage(100);
         table.setSpacingBefore(6);
         table.setWidths(new float[]{3, 1.5f, 1.5f, 1.5f, 1.5f});
 
-        // Заголовки
         addHeaderCell(table, "Player");
         addHeaderCell(table, "Attack %");
         addHeaderCell(table, "Receive %");
         addHeaderCell(table, "Block pts");
         addHeaderCell(table, "Dig");
 
-        // Строки игроков
         addPlayerRow(table, match.getPlayer1());
         addPlayerRow(table, match.getPlayer2());
         addPlayerRow(table, match.getPlayer3());
