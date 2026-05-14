@@ -1,5 +1,6 @@
 package com.volleyballtracker.controller;
 
+import com.volleyballtracker.model.Match;
 import com.volleyballtracker.util.SceneManager;
 import com.volleyballtracker.view.NewGameView;
 import javafx.scene.control.Alert;
@@ -27,7 +28,13 @@ public class NewGameController {
     private void connectActions() {
         view.getSelectButton().setOnAction(event -> {
             if (isFormValid()){
-            System.out.println("Created");}
+                List<String> teams_name = List.of(view.getMatchNameFieldString().split("vs"));
+                Match new_match = new Match(view.getMatchNameFieldString(), view.getDate(), teams_name.get(0),teams_name.get(1),view.getImport_file(),"/data/matches/",
+                        view.getPlayer1FieldString(), view.getPlayer2FieldString(), view.getPlayer3FieldString(), view.getPlayer4FieldString(), view.getPositionBox1String(), view.getPositionBox2String(),
+                        view.getPositionBox3String(), view.getPositionBox4String());
+
+                sceneManager.switchToGameEditor(new_match);
+            }
         });
 
         view.getAutofillCheckBox().setOnAction(event -> {

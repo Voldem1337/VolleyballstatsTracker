@@ -45,12 +45,11 @@ public class Match {
         this.date = date;
         this.teamOneName = teamOneName;
         this.teamTwoName = teamTwoName;
-        List<String> teams_name = List.of(matchName.split("vs"));
 
-         this.player1 = new Player(player1name,player1Position, teams_name.get(0));
-         this.player2 = new Player(player2name,player2Position, teams_name.get(0));
-         this.player3 = new Player(player3name, player3Position, teams_name.get(1));
-         this.player4 = new Player(player4name, player4Position, teams_name.get(1));
+         this.player1 = new Player(player1name,player1Position, teamOneName);
+         this.player2 = new Player(player2name,player2Position, teamOneName);
+         this.player3 = new Player(player3name, player3Position, teamTwoName);
+         this.player4 = new Player(player4name, player4Position, teamTwoName);
 
 
         this.teamOneSetsWon = 0;

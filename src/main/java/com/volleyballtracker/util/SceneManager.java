@@ -4,6 +4,7 @@ import com.volleyballtracker.controller.EditStatsController;
 import com.volleyballtracker.controller.GameEditorController;
 import com.volleyballtracker.controller.MainMenuController;
 import com.volleyballtracker.controller.NewGameController;
+import com.volleyballtracker.model.Match;
 import com.volleyballtracker.view.EditStatsView;
 import com.volleyballtracker.view.GameEditorView;
 import com.volleyballtracker.view.MainMenuView;
@@ -54,7 +55,7 @@ import javafx.stage.Stage;
     }
 
     /** Opens Game Editor screen. */
-    public void switchToGameEditor() {
+    public void switchToGameEditor(Match match) {
         // TODO: Load Game Editor screen.
         GameEditorView view = new GameEditorView();
 
