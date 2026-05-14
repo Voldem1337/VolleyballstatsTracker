@@ -233,6 +233,110 @@ public class Player {
         this.digError = digError;
     }
 
+    public int getOverallAttack() {
+        return overallAttack;
+    }
+
+    public int getOverallReceive() {
+        return overallReceive;
+    }
+
+    public int getOverallDig() {
+        return overallDig;
+    }
+
+    public int getOverallBlock() {
+        return overallBlock;
+    }
+
+    public int getTotalPoints() {
+        return totalPoints;
+    }
+
+    public int getTotalErrors() {
+        return totalErrors;
+    }
+
+    public int getFloatServe() {
+        return floatServe;
+    }
+
+    public int getJumpServe() {
+        return jumpServe;
+    }
+
+    public int getAce() {
+        return ace;
+    }
+
+    public int getServeAttempt() {
+        return serveAttempt;
+    }
+
+    public int getServeError() {
+        return serveError;
+    }
+
+    public int getReceiveForTheOption() {
+        return receiveForTheOption;
+    }
+
+    public int getGoodReceive() {
+        return goodReceive;
+    }
+
+    public int getHardToSet() {
+        return hardToSet;
+    }
+
+    public int getReceiveError() {
+        return receiveError;
+    }
+
+    public int getSpikeKill() {
+        return spikeKill;
+    }
+
+    public int getSpikeError() {
+        return spikeError;
+    }
+
+    public int getCutShotKill() {
+        return cutShotKill;
+    }
+
+    public int getCutShotError() {
+        return cutShotError;
+    }
+
+    public int getSpikeAttempt() {
+        return spikeAttempt;
+    }
+
+    public int getCutShotAttempt() {
+        return cutShotAttempt;
+    }
+
+    public int getMonsterBlock() {
+        return monsterBlock;
+    }
+
+    public int getBlockTouch() {
+        return blockTouch;
+    }
+
+    public int getBlockError() {
+        return blockError;
+    }
+
+    public int getDig() {
+        return dig;
+    }
+
+    public int getDigError() {
+        return digError;
+    }
+
     /** Updates overall player statistics. */
     public void updateOverallStats() {
         // TODO: Recalculate overall attack, receive, dig, and block values.
@@ -243,4 +347,5 @@ public class Player {
         // TODO: Calculate successful actions / total actions.
         return 0;
     }
+
 }
