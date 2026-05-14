@@ -1,7 +1,9 @@
 package com.volleyballtracker.view;
 
+import com.volleyballtracker.model.Match;
 import com.volleyballtracker.model.Player;
 import com.volleyballtracker.model.TableRow;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -11,6 +13,7 @@ import javafx.scene.text.Font;
 import javafx.util.converter.NumberStringConverter;
 
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * EditStatsView
@@ -19,6 +22,12 @@ import java.util.List;
  * Здесь пользователь сможет выбрать действие и изменить или удалить его.
  */
 public class EditStatsView {
+    private Match match;
+    private Player player1;
+    private Player player2;
+    private Player player3;
+    private Player player4;
+
     private VBox root;
 
     private Label titleLabel;
@@ -28,14 +37,15 @@ public class EditStatsView {
     private Button saveButton;
     private Button backButton;
 
-    public EditStatsView() {
-        createView();
+    public EditStatsView(Match match) {
+        this.match = match;
+        createView(match);
     }
 
     /**
      * Создаёт визуальную часть страницы Edit Stats.
      */
-    private void createView() {
+    private void createView(Match match) {
         // TODO: Создать список действий, кнопки Edit, Delete, Save и Back.
         root = new VBox(15);
 
@@ -51,10 +61,10 @@ public class EditStatsView {
 
 
 
-        Player player1 = new Player("Alex", "Blocker", "Selver");
-        Player player2 = new Player("Alex", "Blocker", "Selver");
-        Player player3 = new Player("Alex", "Blocker", "Selver");
-        Player player4 = new Player("Alex", "Blocker", "Selver");
+        player1 = match.getPlayer1();
+        player2 = match.getPlayer2();
+        player3 = match.getPlayer3();
+        player4 = match.getPlayer4();
         List<Player> players = List.of(player1, player2, player3, player4);
 
         for (Player p : players) {
@@ -85,7 +95,6 @@ public class EditStatsView {
     }
 
     public TableView<TableRow> getStatsTable() {
-
         return statsTable;
     }
 
@@ -252,47 +261,95 @@ public class EditStatsView {
                 digErrorColumn
         );
 
-        makeEditable(overallAttackColumn);
-        makeEditable(overallReceiveColumn);
-        makeEditable(overallDigColumn);
-        makeEditable(overallBlockColumn);
+        makeEditable(overallAttackColumn, TableRow::overallAttackProperty);
+        makeEditable(overallReceiveColumn, TableRow::overallReceiveProperty);
+        makeEditable(overallDigColumn, TableRow::overallDigProperty);
+        makeEditable(overallBlockColumn, TableRow::overallBlockProperty);
 
-        makeEditable(totalPointsColumn);
-        makeEditable(totalErrorsColumn);
+        makeEditable(totalPointsColumn, TableRow::totalPointsProperty);
+        makeEditable(totalErrorsColumn, TableRow::totalErrorsProperty);
 
-        makeEditable(floatServeColumn);
-        makeEditable(jumpServeColumn);
-        makeEditable(aceColumn);
-        makeEditable(serveAttemptColumn);
-        makeEditable(serveErrorColumn);
+        makeEditable(floatServeColumn, TableRow::floatServeProperty);
+        makeEditable(jumpServeColumn, TableRow::jumpServeProperty);
+        makeEditable(aceColumn, TableRow::aceProperty);
+        makeEditable(serveAttemptColumn, TableRow::serveAttemptProperty);
+        makeEditable(serveErrorColumn, TableRow::serveErrorProperty);
 
-        makeEditable(receiveForTheOptionColumn);
-        makeEditable(goodReceiveColumn);
-        makeEditable(hardToSetColumn);
-        makeEditable(receiveErrorColumn);
+        makeEditable(receiveForTheOptionColumn, TableRow::receiveForTheOptionProperty);
+        makeEditable(goodReceiveColumn, TableRow::goodReceiveProperty);
+        makeEditable(hardToSetColumn, TableRow::hardToSetProperty);
+        makeEditable(receiveErrorColumn, TableRow::receiveErrorProperty);
 
-        makeEditable(spikeKillColumn);
-        makeEditable(spikeErrorColumn);
-        makeEditable(cutShotKillColumn);
-        makeEditable(cutShotErrorColumn);
-        makeEditable(spikeAttemptColumn);
-        makeEditable(cutShotAttemptColumn);
+        makeEditable(spikeKillColumn, TableRow::spikeKillProperty);
+        makeEditable(spikeErrorColumn, TableRow::spikeErrorProperty);
+        makeEditable(cutShotKillColumn, TableRow::cutShotKillProperty);
+        makeEditable(cutShotErrorColumn, TableRow::cutShotErrorProperty);
+        makeEditable(spikeAttemptColumn, TableRow::spikeAttemptProperty);
+        makeEditable(cutShotAttemptColumn, TableRow::cutShotAttemptProperty);
 
-        makeEditable(monsterBlockColumn);
-        makeEditable(blockTouchColumn);
-        makeEditable(blockErrorColumn);
+        makeEditable(monsterBlockColumn, TableRow::monsterBlockProperty);
+        makeEditable(blockTouchColumn, TableRow::blockTouchProperty);
+        makeEditable(blockErrorColumn, TableRow::blockErrorProperty);
 
-        makeEditable(digColumn);
-        makeEditable(digErrorColumn);
+        makeEditable(digColumn, TableRow::digProperty);
+        makeEditable(digErrorColumn, TableRow::digErrorProperty);
     }
 
-    private void makeEditable(TableColumn<TableRow, Number> column) {
+    private void makeEditable(
+            TableColumn<TableRow, Number> column,
+            Function<TableRow, SimpleIntegerProperty> propertyGetter
+    ) {
         column.setCellFactory(
                 TextFieldTableCell.forTableColumn(new NumberStringConverter())
         );
 
         column.setOnEditCommit(event -> {
-            Integer newValue = event.getNewValue().intValue();
+            int newValue = event.getNewValue().intValue();
+            TableRow row = event.getRowValue();
+
+            propertyGetter.apply(row).set(newValue);
         });
+    }
+
+    public void saveTableDataToPlayers(List<Player> players) {
+        for (int i = 0; i < statsTable.getItems().size(); i++) {
+            TableRow row = statsTable.getItems().get(i);
+            System.out.println(statsTable.getItems().get(i));
+            Player player = players.get(i);
+            System.out.println(player.toString());
+
+            player.setOverallAttack(row.getOverallAttack());
+            player.setOverallReceive(row.getOverallReceive());
+            player.setOverallDig(row.getOverallDig());
+            player.setOverallBlock(row.getOverallBlock());
+
+            player.setTotalPoints(row.getTotalPoints());
+            player.setTotalErrors(row.getTotalErrors());
+
+            player.setFloatServe(row.getFloatServe());
+            player.setJumpServe(row.getJumpServe());
+            player.setAce(row.getAce());
+            player.setServeAttempt(row.getServeAttempt());
+            player.setServeError(row.getServeError());
+
+            player.setReceiveForTheOption(row.getReceiveForTheOption());
+            player.setGoodReceive(row.getGoodReceive());
+            player.setHardToSet(row.getHardToSet());
+            player.setReceiveError(row.getReceiveError());
+
+            player.setSpikeKill(row.getSpikeKill());
+            player.setSpikeError(row.getSpikeError());
+            player.setCutShotKill(row.getCutShotKill());
+            player.setCutShotError(row.getCutShotError());
+            player.setSpikeAttempt(row.getSpikeAttempt());
+            player.setCutShotAttempt(row.getCutShotAttempt());
+
+            player.setMonsterBlock(row.getMonsterBlock());
+            player.setBlockTouch(row.getBlockTouch());
+            player.setBlockError(row.getBlockError());
+
+            player.setDig(row.getDig());
+            player.setDigError(row.getDigError());
+        }
     }
 }

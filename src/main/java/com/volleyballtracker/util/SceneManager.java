@@ -54,7 +54,7 @@ import javafx.stage.Stage;
 
     /** Opens Game Editor screen. */
     public void switchToGameEditor(Match match) {
-        GameEditorView view = new GameEditorView();
+        GameEditorView view = new GameEditorView(match);
 
         new GameEditorController(view, stage,match);
         Scene scene = new Scene(view.getRoot(), 900, 600);
@@ -62,10 +62,10 @@ import javafx.stage.Stage;
     }
 
     /** Opens Edit Stats screen. */
-    public void switchToEditStats() {
-        EditStatsView view = new EditStatsView();
+    public void switchToEditStats(Match match) {
+        EditStatsView view = new EditStatsView(match);
 
-        new EditStatsController(view, stage);
+        new EditStatsController(view, stage, match);
         Scene scene = new Scene(view.getRoot(), 900, 600);
         stage.setScene(scene);
     }

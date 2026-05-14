@@ -208,4 +208,112 @@ public class TableRow {
     public SimpleIntegerProperty digErrorProperty() {
         return digError;
     }
+
+    public String getPlayerName() {
+        return playerName.get();
+    }
+
+    public int getOverallAttack() {
+        return overallAttack.get();
+    }
+
+    public int getOverallReceive() {
+        return overallReceive.get();
+    }
+
+    public int getOverallDig() {
+        return overallDig.get();
+    }
+
+    public int getOverallBlock() {
+        return overallBlock.get();
+    }
+
+    public int getTotalPoints() {
+        return totalPoints.get();
+    }
+
+    public int getTotalErrors() {
+        return totalErrors.get();
+    }
+
+    public int getFloatServe() {
+        return floatServe.get();
+    }
+
+    public int getJumpServe() {
+        return jumpServe.get();
+    }
+
+    public int getAce() {
+        return ace.get();
+    }
+
+    public int getServeAttempt() {
+        return serveAttempt.get();
+    }
+
+    public int getServeError() {
+        return serveError.get();
+    }
+
+    public int getReceiveForTheOption() {
+        return receiveForTheOption.get();
+    }
+
+    public int getGoodReceive() {
+        return goodReceive.get();
+    }
+
+    public int getHardToSet() {
+        return hardToSet.get();
+    }
+
+    public int getReceiveError() {
+        return receiveError.get();
+    }
+
+    public int getSpikeKill() {
+        return spikeKill.get();
+    }
+
+    public int getSpikeError() {
+        return spikeError.get();
+    }
+
+    public int getCutShotKill() {
+        return cutShotKill.get();
+    }
+
+    public int getCutShotError() {
+        return cutShotError.get();
+    }
+
+    public int getSpikeAttempt() {
+        return spikeAttempt.get();
+    }
+
+    public int getCutShotAttempt() {
+        return cutShotAttempt.get();
+    }
+
+    public int getMonsterBlock() {
+        return monsterBlock.get();
+    }
+
+    public int getBlockTouch() {
+        return blockTouch.get();
+    }
+
+    public int getBlockError() {
+        return blockError.get();
+    }
+
+    public int getDig() {
+        return dig.get();
+    }
+
+    public int getDigError() {
+        return digError.get();
+    }
 }

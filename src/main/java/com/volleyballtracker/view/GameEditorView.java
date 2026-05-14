@@ -1,5 +1,6 @@
 package com.volleyballtracker.view;
 
+import com.volleyballtracker.model.Match;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -9,25 +10,17 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-/**
- * GameEditorView
- *
- * Главный экран игры.
- * Здесь будут отображаться название матча, счёт, игроки и кнопки действий.
- */
 public class GameEditorView {
+    private Match match;
     private BorderPane root;
 
-    // Top
     private HBox headerBox;
     private Label matchNameLabel;
     private Label teamOneScoreLabel;
     private Label scoreSeparatorLabel;
     private Label teamTwoScoreLabel;
-    private Label setLabel;
     private Label setNumberLabel;
 
-    // Center
     private GridPane actionsGrid;
 
     private Label playerOneLabel;
@@ -55,9 +48,7 @@ public class GameEditorView {
     private Button playerFourBlockButton;
     private Button playerFourDigButton;
 
-    // Bottom
     private VBox bottomBox;
-
     private Button newSetButton;
 
     private GridPane bottomButtonsGrid;
@@ -68,44 +59,35 @@ public class GameEditorView {
     private Button editScoreButton;
     private Button secondBallPointsButton;
 
-    public GameEditorView() {
-        createView();
+    public GameEditorView(Match match) {
+        this.match = match;
+        createView(match);
     }
 
-    /**
-     * Создаёт визуальную часть редактора игры.
-     */
-    public void createView() {
-        // TODO: Создать таблицу игроков, кнопки Attack/Receive/Block/Dig и нижние кнопки управления.
+    public void createView(Match match) {
         root = new BorderPane();
         root.setPadding(new Insets(20));
 
-        // Top
         headerBox = new HBox(20);
         headerBox.setAlignment(Pos.CENTER);
 
-        matchNameLabel = new Label("Team 1 vs Team 2");
-        teamOneScoreLabel = new Label("0");
-        teamTwoScoreLabel = new Label("0");
+        matchNameLabel = new Label(match.getTeamOneName() + " vs " + match.getTeamTwoName());
+        teamOneScoreLabel = new Label(String.valueOf(match.getSets().get(match.getCurrentSetNumber() - 1).getTeamOnePoints()));
+        teamTwoScoreLabel = new Label(String.valueOf(match.getSets().get(match.getCurrentSetNumber() - 1).getTeamTwoPoints()));
         scoreSeparatorLabel = new Label(":");
-        setLabel = new Label("Set:");
-        setNumberLabel = new Label("1");
+        setNumberLabel = new Label("Set: " + match.getCurrentSetNumber());
 
+        headerBox.getChildren().addAll(matchNameLabel, teamOneScoreLabel, scoreSeparatorLabel, teamTwoScoreLabel, setNumberLabel);
 
-        headerBox.getChildren().addAll(matchNameLabel, teamOneScoreLabel,
-                scoreSeparatorLabel, teamTwoScoreLabel, setLabel, setNumberLabel);
-
-
-        // Center (Grid)
         actionsGrid = new GridPane();
         actionsGrid.setAlignment(Pos.CENTER);
         actionsGrid.setHgap(70);
         actionsGrid.setVgap(15);
 
-        playerOneLabel = new Label("Player 1");
-        playerTwoLabel = new Label("Player 2");
-        playerThreeLabel = new Label("Player 3");
-        playerFourLabel = new Label("Player 4");
+        playerOneLabel = new Label(match.getPlayer1().getName());
+        playerTwoLabel = new Label(match.getPlayer2().getName());
+        playerThreeLabel = new Label(match.getPlayer3().getName());
+        playerFourLabel = new Label(match.getPlayer4().getName());
 
         playerOneAttackButton = new Button("Attack");
         playerOneReceiveButton = new Button("Receive");
@@ -152,8 +134,8 @@ public class GameEditorView {
         actionsGrid.add(playerThreeDigButton, 2, 4);
         actionsGrid.add(playerFourDigButton, 3, 4);
 
-        // Bottom
         bottomBox = new VBox(10);
+        bottomBox.setAlignment(Pos.CENTER);
 
         newSetButton = new Button("New Set");
 
@@ -169,16 +151,14 @@ public class GameEditorView {
         editScoreButton = new Button("Edit Score");
         secondBallPointsButton = new Button("Second ball point");
 
-        bottomBox.setAlignment(Pos.CENTER);
-
         bottomBox.getChildren().addAll(newSetButton, bottomButtonsGrid);
 
-        bottomButtonsGrid.add(editStatsButton,0,0);
-        bottomButtonsGrid.add(exportButton, 1,0);
-        bottomButtonsGrid.add(exitButton, 2,0);
-        bottomButtonsGrid.add(rallyCounterButton, 0,1);
-        bottomButtonsGrid.add(editScoreButton, 1,1);
-        bottomButtonsGrid.add(secondBallPointsButton, 2,1);
+        bottomButtonsGrid.add(editStatsButton, 0, 0);
+        bottomButtonsGrid.add(exportButton, 1, 0);
+        bottomButtonsGrid.add(exitButton, 2, 0);
+        bottomButtonsGrid.add(rallyCounterButton, 0, 1);
+        bottomButtonsGrid.add(editScoreButton, 1, 1);
+        bottomButtonsGrid.add(secondBallPointsButton, 2, 1);
 
         root.setTop(headerBox);
         root.setCenter(actionsGrid);
@@ -188,22 +168,18 @@ public class GameEditorView {
         setButtonSizeBig(playerOneReceiveButton);
         setButtonSizeBig(playerOneBlockButton);
         setButtonSizeBig(playerOneDigButton);
-
         setButtonSizeBig(playerTwoAttackButton);
         setButtonSizeBig(playerTwoReceiveButton);
         setButtonSizeBig(playerTwoBlockButton);
         setButtonSizeBig(playerTwoDigButton);
-
         setButtonSizeBig(playerThreeAttackButton);
         setButtonSizeBig(playerThreeReceiveButton);
         setButtonSizeBig(playerThreeBlockButton);
         setButtonSizeBig(playerThreeDigButton);
-
         setButtonSizeBig(playerFourAttackButton);
         setButtonSizeBig(playerFourReceiveButton);
         setButtonSizeBig(playerFourBlockButton);
         setButtonSizeBig(playerFourDigButton);
-
         setButtonSizeBig(newSetButton);
         setButtonSizeBig(editScoreButton);
         setButtonSizeBig(editStatsButton);
@@ -211,7 +187,6 @@ public class GameEditorView {
         setButtonSizeBig(exportButton);
         setButtonSizeBig(rallyCounterButton);
         setButtonSizeBig(secondBallPointsButton);
-
     }
 
     public BorderPane getRoot() {
@@ -308,6 +283,31 @@ public class GameEditorView {
 
     public Button getNewSetButton() {
         return newSetButton;
+    }
+
+    public void setScore(int teamOneScore, int teamTwoScore) {
+        teamOneScoreLabel.setText(String.valueOf(teamOneScore));
+        teamTwoScoreLabel.setText(String.valueOf(teamTwoScore));
+    }
+
+    public void setSetNumber(int setNumber) {
+        setNumberLabel.setText("Set: " + setNumber);
+    }
+
+    public void setTeamOneScoreLabel(String text) {
+        teamOneScoreLabel.setText(text);
+    }
+
+    public void setTeamTwoScoreLabel(String text) {
+        teamTwoScoreLabel.setText(text);
+    }
+
+    public void setTeamOneScoreText(String score) {
+        teamOneScoreLabel.setText(score);
+    }
+
+    public void setTeamTwoScoreText(String score) {
+        teamTwoScoreLabel.setText(score);
     }
 
     private void setButtonSizeBig(Button button) {

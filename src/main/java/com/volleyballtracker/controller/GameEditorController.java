@@ -1,18 +1,25 @@
 package com.volleyballtracker.controller;
 
 import com.volleyballtracker.model.Match;
+import com.volleyballtracker.model.Player;
+import com.volleyballtracker.model.Set;
+import com.volleyballtracker.util.SceneManager;
 import com.volleyballtracker.view.GameEditorView;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-/**
- * Controller for Game Editor screen.
- *
- * Purpose:
- * - Main live match screen.
- * - Shows match title, score, players, action buttons, and utility buttons.
- * - Handles Attack, Receive, Block, Dig actions for each player.
- */
+import java.util.List;
+
 public class GameEditorController {
 
     private GameEditorView view;
@@ -23,242 +30,362 @@ public class GameEditorController {
         this.view = view;
         this.stage = stage;
         this.match = match;
+        refreshScore();
         connectActions();
     }
 
     public void connectActions() {
-        view.getPlayerOneAttackButton().setOnAction(actionEvent -> {
-            openAttackDialog("Player 1");
-            System.out.println("Player 1 Attack clicked");
-        });
+        view.getPlayerOneAttackButton().setOnAction(event -> openAttackDialog(match.getPlayer1()));
+        view.getPlayerOneReceiveButton().setOnAction(event -> openReceiveDialog(match.getPlayer1()));
+        view.getPlayerOneBlockButton().setOnAction(event -> openBlockDialog(match.getPlayer1()));
+        view.getPlayerOneDigButton().setOnAction(event -> openDigDialog(match.getPlayer1()));
 
-        view.getPlayerOneReceiveButton().setOnAction(actionEvent -> {
-            openReceiveDialog("Player 1");
-            System.out.println("Player 1 Receive clicked");
-        });
+        view.getPlayerTwoAttackButton().setOnAction(event -> openAttackDialog(match.getPlayer2()));
+        view.getPlayerTwoReceiveButton().setOnAction(event -> openReceiveDialog(match.getPlayer2()));
+        view.getPlayerTwoBlockButton().setOnAction(event -> openBlockDialog(match.getPlayer2()));
+        view.getPlayerTwoDigButton().setOnAction(event -> openDigDialog(match.getPlayer2()));
 
-        view.getPlayerOneBlockButton().setOnAction(actionEvent -> {
-            openBlockDialog("Player 1");
-            System.out.println("Player 1 Block clicked");
-        });
+        view.getPlayerThreeAttackButton().setOnAction(event -> openAttackDialog(match.getPlayer3()));
+        view.getPlayerThreeReceiveButton().setOnAction(event -> openReceiveDialog(match.getPlayer3()));
+        view.getPlayerThreeBlockButton().setOnAction(event -> openBlockDialog(match.getPlayer3()));
+        view.getPlayerThreeDigButton().setOnAction(event -> openDigDialog(match.getPlayer3()));
 
-        view.getPlayerOneDigButton().setOnAction(actionEvent -> {
-            openDigDialog("Player 1");
-            System.out.println("Player 1 Dig clicked");
-        });
+        view.getPlayerFourAttackButton().setOnAction(event -> openAttackDialog(match.getPlayer4()));
+        view.getPlayerFourReceiveButton().setOnAction(event -> openReceiveDialog(match.getPlayer4()));
+        view.getPlayerFourBlockButton().setOnAction(event -> openBlockDialog(match.getPlayer4()));
+        view.getPlayerFourDigButton().setOnAction(event -> openDigDialog(match.getPlayer4()));
 
-
-        view.getPlayerTwoAttackButton().setOnAction(actionEvent -> {
-            openAttackDialog("Player 2");
-            System.out.println("Player 2 Attack clicked");
-        });
-
-        view.getPlayerTwoReceiveButton().setOnAction(actionEvent -> {
-            openReceiveDialog("Player 2");
-            System.out.println("Player 2 Receive clicked");
-        });
-
-        view.getPlayerTwoBlockButton().setOnAction(actionEvent -> {
-            openBlockDialog("Player 2");
-            System.out.println("Player 2 Block clicked");
-        });
-
-        view.getPlayerTwoDigButton().setOnAction(actionEvent -> {
-            openDigDialog("Player 2");
-            System.out.println("Player 2 Dig clicked");
-        });
-
-
-        view.getPlayerThreeAttackButton().setOnAction(actionEvent -> {
-            openAttackDialog("Player 3");
-            System.out.println("Player 3 Attack clicked");
-        });
-
-        view.getPlayerThreeReceiveButton().setOnAction(actionEvent -> {
-            openReceiveDialog("Player 3");
-            System.out.println("Player 3 Receive clicked");
-        });
-
-        view.getPlayerThreeBlockButton().setOnAction(actionEvent -> {
-            openBlockDialog("Player 3");
-            System.out.println("Player 3 Block clicked");
-        });
-
-        view.getPlayerThreeDigButton().setOnAction(actionEvent -> {
-            openDigDialog("Player 3");
-            System.out.println("Player 3 Dig clicked");
-        });
-
-
-        view.getPlayerFourAttackButton().setOnAction(actionEvent -> {
-            openAttackDialog("Player 4");
-            System.out.println("Player 4 Attack clicked");
-        });
-
-        view.getPlayerFourReceiveButton().setOnAction(actionEvent -> {
-            openReceiveDialog("Player 4");
-            System.out.println("Player 4 Receive clicked");
-        });
-
-        view.getPlayerFourBlockButton().setOnAction(actionEvent -> {
-            openBlockDialog("Player 4");
-            System.out.println("Player 4 Block clicked");
-        });
-
-        view.getPlayerFourDigButton().setOnAction(actionEvent -> {
-            openDigDialog("Player 4");
-            System.out.println("Player 4 Dig clicked");
-        });
-
-        view.getNewSetButton().setOnAction(actionEvent -> {
-            System.out.println("New Set clicked");
-        });
-
-        view.getEditStatsButton().setOnAction(actionEvent -> {
-            System.out.println("Edit Stats clicked");
-        });
-
-        view.getExportButton().setOnAction(actionEvent -> {
-            System.out.println("Export clicked");
-        });
-
-        view.getExitButton().setOnAction(actionEvent -> {
-            System.out.println("Exit clicked");
-        });
-
-        view.getRallyCounterButton().setOnAction(actionEvent -> {
-            System.out.println("Long Rally clicked");
-        });
-
-        view.getEditScoreButton().setOnAction(actionEvent -> {
-            System.out.println("Edit Score clicked");
-        });
-
-        view.getSecondBallPointsButton().setOnAction(actionEvent -> {
-            System.out.println("Second Ball Point clicked");
-        });
+        view.getNewSetButton().setOnAction(event -> onNewSetClicked());
+        view.getEditStatsButton().setOnAction(event -> onEditStatsClicked());
+        view.getExportButton().setOnAction(event -> onExportClicked());
+        view.getExitButton().setOnAction(event -> onExitClicked());
+        view.getRallyCounterButton().setOnAction(event -> onRallyCounterClicked());
+        view.getEditScoreButton().setOnAction(event -> onEditScoreClicked());
+        view.getSecondBallPointsButton().setOnAction(event -> onSecondBallPointsClicked());
     }
 
-    /** Handles Attack button for selected player. */
-    private void openAttackDialog(String playerName) {
+    private void openAttackDialog(Player player) {
         ChoiceDialog<String> dialog = new ChoiceDialog<>(
                 "Spike kill",
-                "Spike kill",
-                "Spike error",
-                "Spike attempt",
-                "Cut shot kill",
-                "Cut shot error",
-                "Cut shot attempt");
+                List.of(
+                        "Spike kill",
+                        "Spike error",
+                        "Spike attempt",
+                        "Cut shot kill",
+                        "Cut shot error",
+                        "Cut shot attempt"
+                )
+        );
 
         dialog.setTitle("Attack");
-        dialog.setHeaderText("Choose attack result for " + playerName);
+        dialog.setHeaderText("Choose attack result for " + player.getName());
         dialog.setContentText("Result:");
 
-
         dialog.showAndWait().ifPresent(result -> {
-            System.out.println(playerName + " selected: " + result);
+            processAttack(player, result);
+            refreshScore();
         });
     }
 
-    /** Handles Receive button for selected player. */
-    private void openReceiveDialog(String playerName) {
+    private void openReceiveDialog(Player player) {
         ChoiceDialog<String> dialog = new ChoiceDialog<>(
                 "Good receive",
-                "Good receive",
-                "For the option",
-                "Good receive",
-                "Hard to set",
-                "Receive error"
+                List.of(
+                        "For the option",
+                        "Good receive",
+                        "Hard to set",
+                        "Receive error"
+                )
         );
 
         dialog.setTitle("Receive");
-        dialog.setHeaderText("Choose receive result for " + playerName);
+        dialog.setHeaderText("Choose receive result for " + player.getName());
         dialog.setContentText("Result:");
 
         dialog.showAndWait().ifPresent(result -> {
-            System.out.println(playerName + " receive result: " + result);
+            processReceive(player, result);
+            refreshScore();
         });
     }
 
-    /** Handles Block button for selected player. */
-    private void openBlockDialog(String playerName) {
+    private void openBlockDialog(Player player) {
         ChoiceDialog<String> dialog = new ChoiceDialog<>(
                 "Monster block",
-                "Monster block",
-                "Very good block touch",
-                "Block touch",
-                "Block out"
+                List.of(
+                        "Monster block",
+                        "Very good block touch",
+                        "Block touch",
+                        "Block out"
+                )
         );
 
         dialog.setTitle("Block");
-        dialog.setHeaderText("Choose block result for " + playerName);
+        dialog.setHeaderText("Choose block result for " + player.getName());
         dialog.setContentText("Result:");
 
         dialog.showAndWait().ifPresent(result -> {
-            System.out.println(playerName + " block result: " + result);
+            processBlock(player, result);
+            refreshScore();
         });
     }
 
-    /** Handles Dig button for selected player. */
-    private void openDigDialog(String playerName) {
+    private void openDigDialog(Player player) {
         ChoiceDialog<String> dialog = new ChoiceDialog<>(
                 "Dig",
-                "Dig",
-                "Dig error"
+                List.of(
+                        "Dig",
+                        "Dig error"
+                )
         );
 
         dialog.setTitle("Dig");
-        dialog.setHeaderText("Choose dig result for " + playerName);
+        dialog.setHeaderText("Choose dig result for " + player.getName());
         dialog.setContentText("Result:");
 
         dialog.showAndWait().ifPresent(result -> {
-            System.out.println(playerName + " dig result: " + result);
+            processDig(player, result);
+            refreshScore();
         });
     }
 
-    /** Receives selected match from Open Game or New Game screen. */
-    public void setMatch() {
-        // TODO: Store current Match object.
-        //
+    private void processAttack(Player player, String result) {
+        player.setOverallAttack(player.getOverallAttack() + 1);
+
+        switch (result) {
+            case "Spike kill" -> {
+                player.setSpikeKill(player.getSpikeKill() + 1);
+                player.setSpikeAttempt(player.getSpikeAttempt() + 1);
+                player.setTotalPoints(player.getTotalPoints() + 1);
+                addPointToPlayerTeam(player);
+            }
+            case "Spike error" -> {
+                player.setSpikeError(player.getSpikeError() + 1);
+                player.setSpikeAttempt(player.getSpikeAttempt() + 1);
+                player.setTotalErrors(player.getTotalErrors() + 1);
+                addPointToOpponentTeam(player);
+            }
+            case "Spike attempt" -> player.setSpikeAttempt(player.getSpikeAttempt() + 1);
+            case "Cut shot kill" -> {
+                player.setCutShotKill(player.getCutShotKill() + 1);
+                player.setCutShotAttempt(player.getCutShotAttempt() + 1);
+                player.setTotalPoints(player.getTotalPoints() + 1);
+                addPointToPlayerTeam(player);
+            }
+            case "Cut shot error" -> {
+                player.setCutShotError(player.getCutShotError() + 1);
+                player.setCutShotAttempt(player.getCutShotAttempt() + 1);
+                player.setTotalErrors(player.getTotalErrors() + 1);
+                addPointToOpponentTeam(player);
+            }
+            case "Cut shot attempt" -> player.setCutShotAttempt(player.getCutShotAttempt() + 1);
+        }
     }
 
-    /** Refreshes score, current set, player names, and visual state. */
-    private void refreshScreen() {
-        // TODO: Update all UI elements.
+    private void processReceive(Player player, String result) {
+        player.setOverallReceive(player.getOverallReceive() + 1);
+
+        switch (result) {
+            case "For the option" -> player.setReceiveForTheOption(player.getReceiveForTheOption() + 1);
+            case "Good receive" -> player.setGoodReceive(player.getGoodReceive() + 1);
+            case "Hard to set" -> player.setHardToSet(player.getHardToSet() + 1);
+            case "Receive error" -> {
+                player.setReceiveError(player.getReceiveError() + 1);
+                player.setTotalErrors(player.getTotalErrors() + 1);
+                addPointToOpponentTeam(player);
+            }
+        }
     }
 
-    /** Creates a new set and resets score to 0:0. */
+    private void processBlock(Player player, String result) {
+        player.setOverallBlock(player.getOverallBlock() + 1);
+
+        switch (result) {
+            case "Monster block" -> {
+                player.setMonsterBlock(player.getMonsterBlock() + 1);
+                player.setTotalPoints(player.getTotalPoints() + 1);
+                addPointToPlayerTeam(player);
+            }
+            case "Very good block touch", "Block touch" -> player.setBlockTouch(player.getBlockTouch() + 1);
+            case "Block out" -> {
+                player.setBlockError(player.getBlockError() + 1);
+                player.setTotalErrors(player.getTotalErrors() + 1);
+                addPointToOpponentTeam(player);
+            }
+        }
+    }
+
+    private void processDig(Player player, String result) {
+        player.setOverallDig(player.getOverallDig() + 1);
+
+        switch (result) {
+            case "Dig" -> player.setDig(player.getDig() + 1);
+            case "Dig error" -> {
+                player.setDigError(player.getDigError() + 1);
+                player.setTotalErrors(player.getTotalErrors() + 1);
+                addPointToOpponentTeam(player);
+            }
+        }
+    }
+
+    private Set getCurrentSet() {
+        return match.getSets().get(match.getCurrentSetNumber() - 1);
+    }
+
+    private boolean isTeamOnePlayer(Player player) {
+        return player == match.getPlayer1() || player == match.getPlayer2();
+    }
+
+    private void addPointToPlayerTeam(Player player) {
+        if (isTeamOnePlayer(player)) {
+            getCurrentSet().addPointToTeamOne();
+        } else {
+            getCurrentSet().addPointToTeamTwo();
+        }
+    }
+
+    private void addPointToOpponentTeam(Player player) {
+        if (isTeamOnePlayer(player)) {
+            getCurrentSet().addPointToTeamTwo();
+        } else {
+            getCurrentSet().addPointToTeamOne();
+        }
+    }
+
+    private void refreshScore() {
+        Set set = getCurrentSet();
+        view.setScore(set.getTeamOnePoints(), set.getTeamTwoPoints());
+        view.setSetNumber(match.getCurrentSetNumber());
+    }
+
     public void onNewSetClicked() {
-        // TODO: Finish current set if needed, create new set, reset score.
+        int nextSetNumber = match.getCurrentSetNumber() + 1;
+
+        if (nextSetNumber > match.getSets().size()) {
+            match.addSet();
+        }
+
+        match.setCurrentSetNumber(nextSetNumber);
+        refreshScore();
     }
 
-    /** Opens Edit Stats screen. */
     public void onEditStatsClicked() {
-        // TODO: Switch to Edit Stats screen.
+        SceneManager sceneManager = new SceneManager(stage);
+        sceneManager.switchToEditStats(match);
     }
 
-    /** Opens Export screen for current match. */
     public void onExportClicked() {
-        // TODO: Switch to Export Stats screen with selected match.
     }
 
-    /** Handles exit from current game. */
     public void onExitClicked() {
-        // TODO: Ask Save and exit / Exit without saving / Cancel.
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Save changes");
+        alert.setHeaderText("Do you want to save changes?");
+        alert.setContentText("Choose an option.");
+
+        ButtonType saveButton = new ButtonType("Save");
+        ButtonType dontSaveButton = new ButtonType("Don't save");
+        ButtonType cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(saveButton, dontSaveButton, cancelButton);
+
+        alert.showAndWait().ifPresent(result -> {
+            if (result == saveButton || result == dontSaveButton) {
+                SceneManager sceneManager = new SceneManager(stage);
+                sceneManager.switchToMainMenu();
+            }
+        });
     }
 
-    /** Increases rally counter. */
     public void onRallyCounterClicked() {
-        // TODO: Increase rally count and save rally length if needed.
+        Set set = getCurrentSet();
+        set.setRallyCounter(set.getRallyCounter() + 1);
     }
 
-    /** Opens manual score editor. */
     public void onEditScoreClicked() {
-        // TODO: Open Edit Score screen or modal window.
+        Set set = getCurrentSet();
+        Stage editScoreStage = new Stage();
+        editScoreStage.setTitle("Edit Score");
+
+        TextField teamOneScoreField = new TextField(String.valueOf(set.getTeamOnePoints()));
+        TextField teamTwoScoreField = new TextField(String.valueOf(set.getTeamTwoPoints()));
+
+        HBox scoreBox = new HBox(10);
+        scoreBox.setAlignment(Pos.CENTER);
+        scoreBox.getChildren().addAll(
+                new Label("Team 1:"),
+                teamOneScoreField,
+                new Label("Team 2:"),
+                teamTwoScoreField
+        );
+
+        VBox root = new VBox(15);
+        root.setAlignment(Pos.CENTER);
+        root.setPadding(new Insets(20));
+        root.getChildren().add(scoreBox);
+
+        teamOneScoreField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.isEmpty()) {
+                return;
+            }
+
+            try {
+                int score = Integer.parseInt(newValue);
+
+                if (score < 0) {
+                    teamOneScoreField.setText(oldValue);
+                    return;
+                }
+
+                set.setTeamOnePoints(score);
+                refreshScore();
+            } catch (NumberFormatException e) {
+                teamOneScoreField.setText(oldValue);
+            }
+        });
+
+        teamTwoScoreField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.isEmpty()) {
+                return;
+            }
+
+            try {
+                int score = Integer.parseInt(newValue);
+
+                if (score < 0) {
+                    teamTwoScoreField.setText(oldValue);
+                    return;
+                }
+
+                set.setTeamTwoPoints(score);
+                refreshScore();
+            } catch (NumberFormatException e) {
+                teamTwoScoreField.setText(oldValue);
+            }
+        });
+
+        Scene scene = new Scene(root, 350, 120);
+        editScoreStage.setScene(scene);
+        editScoreStage.show();
     }
 
-    /** Adds point from second ball action. */
     public void onSecondBallPointsClicked() {
-        // TODO: Choose player, add second ball point, update score/statistics.
+        List<Player> players = List.of(
+                match.getPlayer1(),
+                match.getPlayer2(),
+                match.getPlayer3(),
+                match.getPlayer4()
+        );
+
+        ChoiceDialog<Player> dialog = new ChoiceDialog<>(match.getPlayer1(), players);
+        dialog.setTitle("Second ball point");
+        dialog.setHeaderText("Choose player");
+        dialog.setContentText("Player:");
+
+        dialog.showAndWait().ifPresent(player -> {
+            getCurrentSet().setSecondBallPoints(getCurrentSet().getSecondBallPoints() + 1);
+            player.setTotalPoints(player.getTotalPoints() + 1);
+            addPointToPlayerTeam(player);
+            refreshScore();
+        });
     }
 }
